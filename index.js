@@ -13,12 +13,11 @@ app.set('view engine', 'ejs');
 //<%= token %>   <%  if (page == 'home') { %>
 // index page
 app.get('/', function(req, res) {
-  console.log(req.params);
   res.render('pages/index',{
-    msg:req.params.id
+    msg:req.rawHeaders
   });
 });
-
+//console.log(req.rawHeaders);
 
 app.listen(8000);
 console.log('u Server sta ascoltando un pò di music sulla porta: 8000');
