@@ -10,12 +10,14 @@ app.use(bodyParser.json());
 app.set('view engine', 'ejs');
 
 // use res.render to load up an ejs view file
-
+//<%= token %>   <%  if (page == 'home') { %>
 // index page
 app.get('/', function(req, res) {
-  res.render('pages/index');
+  res.render('pages/index',{
+    msg:req.params
+  });
 });
 
 
 app.listen(8000);
-console.log('Server is listening on port 8000');
+console.log('u Server sta ascoltando un pò di music sulla porta: 8000');
