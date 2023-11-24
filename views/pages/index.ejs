@@ -12,7 +12,11 @@
 
 <body>
 <h1> hallo cro..tappost?  </h1>
-<%= msg %>
+
 -----
+
+<% for(let z=0; z < msg.length; z++) { %>
+    <h3> <%= msg[z] %> </h3>
+    <% }%>
 </body>
 </html>
