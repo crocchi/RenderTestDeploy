@@ -12,11 +12,14 @@
 
 <body>
 <h1> hallo cro..tappost?  </h1>
-
 -----
 
 <% for(let z=0; z < msg.length; z++) { %>
     <h3> <%= msg[z] %> </h3>
     <% }%>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+      </script>
 </body>
 </html>
