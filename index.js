@@ -12,21 +12,14 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
-//DATABASE LOCALE REDIS....mah..proviamo
-//let createClient =require('redis');
-/*const redis = require("redis");
-const client = redis.createClient({
-    url:'redis://red-clh44duf27hc739ojkg0:6379'
-});
-*/
-
-// Connect to your internal Redis instance using the REDIS_URL environment variable
-// The REDIS_URL is set to the internal Redis URL e.g. redis://red-343245ndffg023:6379
-//const redis = new Redis('redis://red-clh44duf27hc739ojkg0:6379')
+//DATABASE MONGODB CLOUD
+//DB.JS COLLEGAMENTO AL DB MONGO CLOUD
+const db = require('./db/db.js');
+// SE CE QLC PROBLEMA A COLLEGARSI AL DB VISUALIZZA ERRORE 
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');
-
 // use res.render to load up an ejs view file
 
 // index page
