@@ -34,6 +34,9 @@ app.get('/', function(req, res) {
 
 server.listen(8000);
 
+const ChatMsg = require('../db/chat-model')
+
+
 io.on('connection', (socket) => {
     //console.log(socket.handshake.query);
     //console.log('info socketDATA:'+socket.data);
@@ -58,6 +61,11 @@ io.on('connection', (socket) => {
     socket.on('chat message', (msg) => {
         console.log(socket.data.username+': ' + msg);
         io.emit('chat message', msg,socket.data.username);
+    let msgUpdate = new ChatMsg({
+       nick:socket.data.username,
+       text:msg 
+      });
+    msgUpdate.save()//.then(() => console.log('meow'));
       });
 
   });
