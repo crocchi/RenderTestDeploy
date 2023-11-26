@@ -46,6 +46,9 @@ io.on('connection', (socket) => {
      */
     socket.data.username = (socket.id).slice(1,6);
     
+    //READING DATABASE MSG
+    let dataTemp=ChatMsg.find({});
+    console.log(dataTemp);
     //set username
     io.emit('setNick', socket.data.username);
     //show logged
