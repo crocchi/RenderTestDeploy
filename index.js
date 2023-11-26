@@ -34,7 +34,7 @@ app.get('/', function(req, res) {
 
 server.listen(8000);
 
-const ChatMsg = require('../db/chat-model')
+const ChatMsg = require('./db/chat-model')
 
 
 io.on('connection', (socket) => {
