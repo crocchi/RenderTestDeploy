@@ -14,10 +14,11 @@ const io = new Server(server);
 
 //DATABASE LOCALE REDIS....mah..proviamo
 //let createClient =require('redis');
-const redis = require("redis");
+/*const redis = require("redis");
 const client = redis.createClient({
     url:'redis://red-clh44duf27hc739ojkg0:6379'
 });
+*/
 
 // Connect to your internal Redis instance using the REDIS_URL environment variable
 // The REDIS_URL is set to the internal Redis URL e.g. redis://red-343245ndffg023:6379
