@@ -16,7 +16,6 @@ const io = new Server(server);
 //DB.JS COLLEGAMENTO AL DB MONGO CLOUD
 const db = require('./db/db.js');
 // SE CE QLC PROBLEMA A COLLEGARSI AL DB VISUALIZZA ERRORE 
-db.on('connect', console.log('MongoDB connection ok'));
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // set the view engine to ejs
