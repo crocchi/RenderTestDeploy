@@ -1,9 +1,8 @@
 # RenderTestDeploy
 
-HTML5,CSS
-nodejs
-javascript
-mongodb cloud
+HTML5,CSS, JSS
+NODE
+MONGODB
 
 express
 ejs
