@@ -2,10 +2,12 @@
 
 nodejs
 javascript
+mongodb cloud
 
 express
 ejs
 socket.io
+mongoose
 github
 
-testing deploy on render cloud service
+testing chat deploy on render cloud service
