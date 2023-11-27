@@ -37,7 +37,7 @@ server.listen(8000);
 const ChatMsg = require('./db/chat-model')
 
 
-io.on('connection', (socket) => {
+io.on('connection', async (socket) => {
     //console.log(socket.handshake.query);
     //console.log('info socketDATA:'+socket.data);
     /*if(socket.handshake.query['login']){ 
@@ -47,11 +47,13 @@ io.on('connection', (socket) => {
     socket.data.username = (socket.id).slice(1,6);
     
     //READING DATABASE MSG
-    let dataTemp=ChatMsg.find({});
-    console.log(dataTemp);
+    let dataTemp=await ChatMsg.find({});
+    //send chat record
+    io.emit('chatRecord', dataTemp);
+    
     //set username
     io.emit('setNick', socket.data.username);
-    //show logged
+    //show user logged
     io.emit('chat message', ' join now',socket.data.username,true);
 
     console.log('User '+socket.data.username+' is connected!');
@@ -61,12 +63,12 @@ io.on('connection', (socket) => {
         io.emit('chat message', ' is disconnected',socket.data.username,true);
       });
 
-    socket.on('chat message', (msg) => {
+    socket.on('chat message', (msg,time) => {
         console.log(socket.data.username+': ' + msg);
         io.emit('chat message', msg,socket.data.username);
     let msgUpdate = new ChatMsg({
        nick:socket.data.username,
-       text:msg 
+       text:msg
       });
     msgUpdate.save()//.then(() => console.log('meow'));
       });
