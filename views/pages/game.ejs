@@ -21,6 +21,8 @@
 
 				<!-- Header -->
 					<header id="header">
+                        
+                        <img src="https://latitanti.altervista.org/logoBG.png" class="fa-solid fa-play"></img>
 						<h1>ButtonGame v.0.3</h1>
 						<p>#nodejs #socket.io &nbsp;&bull;&nbsp;#ejs #express &nbsp;&bull;&nbsp; #Render Web Service</p>
 						<nav>
@@ -28,9 +30,9 @@
 							<!--	<li><a href="#" class="fa-solid fa-house"><span class="label">Home</span></a></li>-->
 								<li><a href="#" class="fa-solid fa-play"><span class="label">PlayGame</span></a></li>
 								<li><a href="#" class="fa-solid fa-star"><span class="label">Stats</span></a></li>
-                                <li><a href="#" id="myBtn" class="fa-solid fa-comment"><span class="label">Chat</span></a></li>
+                                <li><a href="#" onclick="openPage('chat');"  id="myBtn" class="fa-solid fa-comment"><span class="label">Chat</span></a></li>
                                 
-								<li><a href="#" id="myBtnConf" class="fa-solid fa-gear"><span class="label">Conf</span></a></li>
+								<li><a href="#" onclick="openPage('conf');" id="myBtnConf" class="fa-solid fa-gear"><span class="label">Conf</span></a></li>
                                </ul>
 						</nav>
 					</header>
@@ -46,7 +48,9 @@
                                 <a id='labelLogo' class="fa-solid fa-comment"></a>
                                 <span id="labelPage" class="label"> CHAT </span>
                             </div>
-                    <div id='modal-body' class="modal-body">
+
+
+                    <div id='modal-body' class="modal-body hide">
                             <ul id="messages"></ul>
                             <br>
                      <div id='modal-footer' class="modal-footer">
@@ -54,12 +58,42 @@
                         <input id="input" autocomplete="off" /><button>Send</button>
                         </form>
                      </div>
-
                     </div>
-                    <div id='modal-body-page' class="modal-body hide">
+
+
+                    <div id='modal-conf-page' class="modal-body hide">
                         <h2>COnfigurazioni</h2>
                         <br>
+                        <div class="col-6 col-12-small">
+                            <input type="checkbox" id="demo-human" name="demo-human" checked>
+                            <label for="demo-human">I am a human</label>
+
+                            <input type="checkbox" id="demo-human2" name="demo-human" checked>
+                            <label for="demo-human2">AUDIO VOLUME</label>
+                        </div>
+
+                        <div class="col-6 col-12-xsmall">
+                            <input type="text" name="demo-name" id="demo-name" value="" placeholder="Name" />
+                        <button>SAVE</button>
+                        </div>
+
+                        <div class="col-12">
+                            <select name="demo-category" id="demo-category">
+                                <option value="">- Category -</option>
+                                <option value="1">Manufacturing</option>
+                                <option value="1">Shipping</option>
+                                <option value="1">Administration</option>
+                                <option value="1">Human Resources</option>
+                            </select>
+                        </div>
+                        
                     </div> 
+
+                    <div id='modal-conf-stat' class="modal-body hide">
+                        <h2>Classifica</h2>
+                        <br>
+                    </div> 
+
                 </div>
                     <!-- FINE Modal content -->
             </div> 
@@ -67,7 +101,7 @@
 				<!-- Footer -->
 					<footer id="footer">
                       
-						<span class="copyright">&copy;ButtoneGame by Cro.</span>
+						<span class="copyright">&copy;ButtoneGame</span>
 					</footer>
 
 			</div>
@@ -77,6 +111,47 @@
 			window.ontouchmove = function() { return false; }
 			window.onorientationchange = function() { document.body.scrollTop = 0; }
 		
+
+            //openPage('conf')
+let openPage = async (page)=> {//debugger
+
+    modal.style.display = "block";
+
+    if (page==='conf'){
+       let page= document.getElementById('modal-conf-page')
+       //se la pagine contiene la classe hide la leva...altrimenti nn fa nulla...loool;
+       if(page.classList.contains("hide")){
+              page.classList.toggle("hide");
+        } else{ };
+
+        let testoHeader= document.getElementById('labelPage');
+        testoHeader.innerText='CONFIGURAZIONI';
+        console.log('sto configurando...')
+
+        let logoHeader= document.getElementById('labelLogo');
+        logoHeader.className='fa-solid fa-gear';
+
+    }
+
+
+    if (page==='chat'){
+       let page= document.getElementById('modal-body')
+       //se la pagine contiene la classe hide la leva...altrimenti nn fa nulla...loool;
+       if(page.classList.contains("hide")){
+              page.classList.toggle("hide");
+        } else{ };
+
+        let testoHeader= document.getElementById('labelPage');
+        testoHeader.innerText='CHAT';
+
+        let logoHeader= document.getElementById('labelLogo');
+        logoHeader.className='fa-solid fa-comment';
+
+
+    }
+}
+
+
 // Get the modal
 var modal = document.getElementById("myModal");
 
@@ -88,11 +163,11 @@ let btnConf = document.getElementById("myBtnConf");
 var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks on the button, open the modal
-btn.onclick = function(page) {
+/*btn.onclick = function(page) {
   modal.style.display = "block";
-}
+}*/
 
-btnConf.onclick = function(page) {
+/*btnConf.onclick = function(page) {
 
 document.getElementById("labelPage").innerText='CONFIGURAZIONI'
 //document.getElementById("labelLogo");
@@ -104,17 +179,31 @@ document.getElementById("modal-body-page").classList.toggle("hide");
 //document.getElementById("modal-footer");
 }
  modal.style.display = "block";
-}
+}*/
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
   modal.style.display = "none";
+  closeModal();
 }
 
+//chiude tutte le modal
+const closeModal =()=>{
+    let pagecon =document.getElementById('modal-conf-page')        // PAGINA CONFIGURAZIONE
+  let pagecha= document.getElementById('modal-body')  // PAGINA CHAT
+  let pageclas= document.getElementById('modal-conf-stat')  // PAGINA STAT CLASSSSIFICA
+             //se la pagine contiene la classe hide la leva...altrimenti nn fa nulla...loool;
+       if(pagecon.classList.contains("hide")){ } else{ pagecon.classList.toggle("hide");  };
+       
+       if(pagecha.classList.contains("hide")){ } else{ pagecha.classList.toggle("hide");  };
+
+       if(pageclas.classList.contains("hide")){ } else{ pageclas.classList.toggle("hide");  };
+}
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
+    closeModal();
   }
 }
         </script>
