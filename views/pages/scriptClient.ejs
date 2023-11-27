@@ -1,0 +1,74 @@
+<script src="/socket.io/socket.io.js"></script>
+    <script>
+        let socket;
+  if(localStorage.getItem("nickName")){
+    socket = io({
+        query: {
+    login: localStorage.getItem("nickName")
+  }
+});
+  }else socket =io();
+  
+let getTime =()=> {
+    let d = new Date();
+    let h = d.getHours();
+    let m = d.getMinutes();
+    let s =d.getSeconds();
+    return (h + ":" + m + ":" + s)
+} 
+
+
+  let form = document.getElementById('form');
+  let input = document.getElementById('input');
+  let messages = document.getElementById('messages');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (input.value) {
+      //let ttt=getTime();
+      socket.emit('chat message', input.value);
+      input.value = '';
+    }
+  });
+
+  //RICEVE CHAT MESSAGE 
+  socket.on('chat message', function(msg,acc,exit) {
+
+    var item = document.createElement('li');
+    //console.log('nome:'+acc);
+    //const sockets = await io.fetchSockets();
+    //console.log(sockets[0].data.username);
+    if(exit){
+        item.textContent = acc+' '+msg+'';
+        messages.appendChild(item);
+        return
+    }
+
+
+    //item.textContent = acc+':'+msg;
+    item.innerHTML = acc+':'+msg+' '// <time>'+time+'</time>
+    messages.appendChild(item);
+    window.scrollTo(0, document.body.scrollHeight);
+    //window.scrollTo(top);
+  });
+
+
+socket.on("setNick", (userNick) => {
+  console.log('ti è stato dato il nickName...'+userNick);
+  //localStorage.setItem("nickName", userNick);
+});
+let loading=true;
+//  CARICA LA VECCHIA CHAT
+socket.on("chatRecord", (data) => {
+if (loading){
+  for (let i = data.length-10; i < data.length; i++) {
+  var item = document.createElement('li');
+  item.textContent = data[i].nick+':'+data[i].text;
+  messages.appendChild(item);
+  }
+}
+  //localStorage.setItem("nickName", userNick);
+  loading=false;
+});
+
+      </script>

@@ -31,6 +31,15 @@ app.get('/', function(req, res) {
   });
 });
 
+// index page
+app.get('/game', function(req, res) {
+    
+  // console.log(req.rawHeaders);
+ res.render('pages/game',{
+   msg:req.rawHeaders
+ });
+});
+
 
 server.listen(8000);
 
