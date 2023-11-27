@@ -1,6 +1,6 @@
 # RenderTestDeploy
 
-HTML5,CSS, JSS
+HTML5,CSS, JS
 NODE
 MONGODB
 
@@ -10,4 +10,6 @@ socket.io
 mongoose
 github
 
-testing chat deploy on render cloud service
+testing chat socket.io
+and restoring old number game i made 5 years ago for learning purpose ...
+deploy on render cloud service
