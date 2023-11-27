@@ -1,0 +1,481 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, user-scalable=no,
+initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+<title>ButtonGame v.0.2</title>
+<script src="https://kit.fontawesome.com/e5ef891f7a.js" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css?family=Luckiest+Guy&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+<div id="contenitoreHtml"></div>
+<div id="paginaHome">
+<img width="40%" style="max-width:350px" src="img/LOGO.png">
+    <div style="margin: 5%;">
+    <h3>In questo puzzle dovrete accoppiare i numeri uguali.</h3>
+   <ul>
+  <li>I bottoni con i numeri uguali avranno anche lo stesso colore</li>
+  <li>Cerca di distruggere tutti i bottoni per ricevere il max punteggio</li>
+  </ul>
+        </div>
+    <h2 class="button1" onclick="document.getElementById('paginaHome').style.display='none';" >INIZIA</h2><br>
+    <div class="infoP" ><img src="img/atom-the-point.png"><h5>Il suo nome e' Atom the Point. Aiutalo a trovare il suo compagno e farai extra pnt</h5></div>
+    <div class="infoP" ><img src="img/atom-the-number.png"><h5>Il suo nome e' Atom the Bomb. Ti aiutera' a distruggere tutti i bottoni intorno a lui</h5></div>
+     
+</div>
+<div class="barraH" id="barraHome"></div>
+
+<div id="audioSection">
+<audio id="audio">
+  <source src="effect.wav" type="audio/wav">
+</audio>
+<audio id="audio2">
+  <source src="click.wav" type="audio/wav">
+</audio>
+<audio id="audioWin">
+  <source src="https://freesound.org/data/previews/320/320777_5260872-lq.mp3" type="audio/wav">
+</audio>
+<audio id="audioExtraPnt">
+  <source src="https://freesound.org/data/previews/209/209578_2558531-lq.mp3" type="audio/wav">
+</audio>
+<audio id="audioExtraZPnt">
+  <source src="https://freesound.org/data/previews/484/484344_5121236-lq.mp3" type="audio/wav">
+</audio>
+<audio id="boom">
+  <source src="https://freesound.org/data/previews/462/462189_9461949-lq.mp3" type="audio/wav">
+</audio></div>
+ <div id="statusApp"></div>
+ <div id="statusBarra">
+ <div class="button3" onclick="controllo()">CONTROLLA</div>
+ <div style="display:grid;">
+  <spam class="button4" onclick="helpMe()">AIUTO</spam>
+  <spam class="button4" onclick="mostraClassifica()">CLASSIFICA</spam>
+  </div>
+</div>
+<script>
+var xSuperareLiv=1;
+var punteggio=0;
+var contHtml=document.getElementById("contenitoreHtml");
+var statusApp=document.getElementById("statusApp");
+var audioEffect=document.getElementById("audio");
+var audioEffect2=document.getElementById("audio2");
+var audioEffectWin=document.getElementById("audioWin");
+var audioExtraPnt=document.getElementById("audioExtraPnt");
+var audioExtraZPnt=document.getElementById("audioExtraZPnt");
+var boom=document.getElementById("boom");
+var butGfontSize=24;//4vw
+var borderRadius=5;
+//b
+var butG="color:white;font-size:"+butGfontSize+"px;height:60px;width:60px;box-shadow:1px 2px 4px #888888;";
+const botLivello="color:white;text-align:center;margin:0";
+const graficaBarra="background-color:magenta;color:white;width:100%;text-align:center;position:fixed;left:0;top:0;padding:0;margin:0";
+window.onload=function start(){
+//alert("BENVENUTI IN BUTTONGAME!!! \n TROVA I BOTTONI CON I NUMERI UGUALI!!");
+ciao();
+controllo();
+xSuperareLiv=numeroNumeriUguali;
+}
+
+var tuttiNumeri=[],goo;
+// con= numero bottoni da far uscire
+var con=20;
+var numCas=5;
+var livello=1;
+var xx="";
+//funzione x far uscire quantitativo bottoni
+var contenitoreBottoni=[];
+function ciao(ss){
+	if(ss){con=ss;}
+    for(i=0; i<con; i++){ 
+	var y=Math.floor(Math.random()*numCas); 
+	//if(y<=99){ y+= Math.floor(Math.random()*1000);}
+tuttiNumeri[i]=y;
+yCol=String(y);
+if(yCol.length==1){yCol="1d"+y;} 
+if(yCol.length==2){yCol="0"+y;} 
+xx+="<button ";
+//modifico un p; x aggiungere ql  ci nuovo
+//se i numeri casuali sono maggiori di 6 fa la magia del img bott
+if(numCas>3){ 
+var z=Math.floor(Math.random()*numCas);
+//SE IL NUMERO CREATO z E IL NUMERO DEL BOTTONE y SN UGUALI crea il bottone e continue esc dl cilco corrente
+if(z==y){
+xx+="class='bottoneImg' id='"+i+"' style='border-radius:"+borderRadius+"%;background-color:#"+yCol+";"+butG+" ' onclick=game("+y+",this,0) ><spam style='background-color:#00000082;'>"+y+"</spam></button>"; 
+continue;
+} }
+//borderRadius=y;
+//funzione bomba
+//se i due numeri bomba creati sono uguali aggiunge img bomba al bottone.
+var numeroBomba=Math.floor(Math.random()*8);//* 10 numeri = 10% possibilita uscita'
+var numeroBombaDue=Math.floor(Math.random()*8);
+if(numeroBomba==numeroBombaDue){
+xx+="class='bombaImg' id='"+i+"' style='border-radius:"+borderRadius+"%;background-color:#"+yCol+";"+butG+" ' onclick=game("+y+",this,1) ><spam style='background-color: #00000082;'>"+y+"</spam></button>"; 
+continue;
+}
+//finefunzione bomba
+/*
+//funzione bomba2
+//se i due numeri bomba creati sono uguali aggiunge img bomba al bottone.
+var numeroBombaTre=Math.floor(Math.random()*20);//* 10 numeri = 10% possibilita uscita'
+var numeroBombaQuatt=Math.floor(Math.random()*20);
+if(numeroBombaTre==numeroBombaQuatt){console.log("NUMERO BOMBA2");
+xx+="class='bottVetro' id='"+y+"' style='border-radius:"+borderRadius+"%;background-color:#"+yCol+";"+butG+" ' onclick=game("+y+",this,2) ><spam style='background-color: #00000082;'>"+y+"</spam></button>"; 
+continue;
+}*/
+//finefunzione bomba2
+xx+="id='"+i+"' class='bottVetro' style='border-radius:"+borderRadius+"%;background-color:#"+yCol+";"+butG+" ' onclick=game("+y+",this) >"+y+"</button>"; 
+
+
+//xx="id='"+y+"' style='background-color:#"+y+";font-size: 150%;height: 5%;width: 6%;color:white;font-size:larger' onclick=game("+y+",this) >"+y+"; 
+/*
+elementoBottone=document.createElement("spam");
+elementoBottone.id=y;
+xx+="<button id='"+y+"' style='border-radius:"+borderRadius+"%;background-color:#"+yCol+";"+butG+" ' onclick=game("+y+",this) >"+y+"</button>"; 
+
+elementoBottone.innerHTML=xx;
+contHtml.appendChild(elementoBottone);
+*/
+}
+                        
+     xx+="<br><br><br><br><div style='background-color:magenta;text-shadow: 1px 1px #000000;color:white;width:50%;text-align:center;margin:auto;border-radius:5px;box-shadow: 1px 1px 1px black;'><h3 id='tempo'></h3>";              
+     xx+="</div> <div id='barra' class='barra bottVetrod' > <spam style='color:black'id='info'>NUMERI RIMASTI:</spam><spam style='color:black;position:absolute;left:85%;font-size:35px'id='timerCont'></spam> <spam class='butPnt' id='punteggio'></spam><h2 class='ombra' id='livStatus'style="+botLivello+">LIVELLO 1</h2> </div>";
+     
+  //backup-->>   xx+="<br><br><br><br><button style='background-color:magenta;color:white;width:50%;text-align:center;border-radius:5px;box-shadow: 1px 1px 1px black;'onclick='controllo()'>CONTROLLA</button><h2 style='background-color:magenta;color:white;width:50%;text-align:center;margin:auto;border-radius:5px;box-shadow: 1px 1px 1px black;' onclick='helpMe()'>AIUTINO</h3><div style='background-color:magenta;text-shadow: 1px 1px #000000;color:white;width:50%;text-align:center;margin:auto;border-radius:5px;box-shadow: 1px 1px 1px black;'><h3 id='tempo'></h3>";              
+                  // xx+=" <h3 onclick='mostraClassifica()' >Classifica</h3> </div> <div id='barra' class='barra bottVetrod' > <spam style='color:black'id='info'>NUMERI RIMASTI:</spam><spam style='color:black;position:absolute;left:85%;font-size:35px'id='timerCont'></spam> <spam class='butPnt' id='punteggio'></spam><h2 class='ombra' id='livStatus'style="+botLivello+">LIVELLO 1</h2> </div>";
+     
+     contHtml.innerHTML=xx;
+     //document.write(xx);
+     xx="";
+     controlloSuper();
+}
+function silvano(){
+	xx="";
+	goo=prompt('inserisci un valore...');
+	ciao(goo);
+}
+
+var primoNumero=true;
+var secondoNUmero=false;
+var SN="";
+var PNTOT=0,SNTOT=0;
+var premioPnt=false,premioPntSuper=false;
+var premioBomba=false,idTastoBomba=0;
+
+function game(yy,z,trick){
+//controlla se premi la prima o seconda volta i bottone
+if(primoNumero){audioEffect2.play();primoNumero=false;PN=String(yy);if(trick==0){ premioPnt=true;}if(trick==1){ premioBomba=true;idTastoBomba=Number(z.id)}
+                 bottone1=z;bottone1.style.transform="scale(1.6)";return;} else {if(trick==0){ if(premioPnt){ premioPntSuper=true};premioPnt=true};
+                 if(trick==1){ premioBomba=true;idTastoBomba=Number(z.id)};
+                 audioEffect2.play();primoNumero=true;SN=String(yy);bottone2=z;bottone2.style.transform="scale(1.6)";}
+//qui in PN e SN VIENE AGGIUNTO IL VALORE DEL NUMERO PREMUTO
+//E AGGIUNGE TUTTE LE CIFRE DEL NUMERO SOMMANDOLE
+//BISOGNA CREARE CHE CONTROLLA SOLTANTO SE I NUMERI SONO UGUALI
+CONT=PN.length;
+CONT2=SN.length;
+for(i=0;i<CONT;i++){ PNTOT+=Number(PN[i]);}
+for(i=0;i<CONT2;i++){ SNTOT+=Number(SN[i]);}
+//se clicchi due volte lo stesso tasto
+if(bottone1===bottone2){scalo=1;
+trasparenza=2;bottone1.style.transform="scale(1)";premioPnt=false;premioBomba=false;premioPntSuper=false; PNTOT=0;SNTOT=1;}
+//QUI CONTROLLA SE LA SOMMA DELLE CIFRA DEL BOTTONE SONO UGUALI..VA LO STESSO X ADESSO MA IN FTURO BISSOGNA AGGIORNARE STA COSA
+if(PNTOT==SNTOT){
+
+audioEffect.play();
+numD--;
+punteggio+=3;
+popOut(bottone1,bottone2);
+numeriUgual--;
+
+statusApp.innerText="NUMERO TROVATO:"+PN+" PUNTEGGIO: +3";
+//funzione x vedere di ricevere pnt premio quando trovi il mamozzio tra i numeri...
+if(premioPnt){ audioExtraZPnt.play();premioPnt=false; punteggio+=5;statusApp.innerText="Hai trovato Nambi!..+8pnt per te!!!";}
+if(premioPntSuper){audioExtraPnt.play();punteggio+=12;premioPntSuper=false;statusApp.innerText="Hai trovato 2 NAMBI!..x te ben +20pnt in piu'!!!";}
+//funzione premiobomba
+if(premioBomba){/*var juju=String(idTastoBomba-1);
+var jujuUno=document.getElementById(juju);
+juju=String(idTastoBomba+1);
+var jujuDue=document.getElementById(juju);*/
+bottoni=contHtml.getElementsByTagName('button');
+for(let v=0;v<bottoni.length;v++){
+	var numeroId=Number(bottoni[v].id);
+	if(numeroId==idTastoBomba){ var bottoneTargetSin=bottoni[v-1];
+                                var bottoneTargetDes=bottoni[v+1];
+                                bottoneArrayP=v;}
+}
+//console.log(jujuDue);
+premioBomba=false;
+if(bottoneTargetSin==bottone1){bottoneTargetSin=null;}
+if(bottoneTargetSin==bottone2){bottoneTargetSin=null;}
+if(bottoneTargetDes==bottone1){bottoneTargetDes=null;}
+if(bottoneTargetDes==bottone2){bottoneTargetDes=null;}
+buttBomba(bottoneTargetSin,bottoneTargetDes);
+//fine funzione bomba
+}
+//aggiorna lo skermo con numeri rimasti e punteggio 
+document.getElementById("info").innerText="NUMERI RIMASTI:"+numeriUgual;
+document.getElementById("punteggio").innerText=punteggio;
+document.getElementById("punteggio").innerHTML+="<br><spam style='line-height:4px;font-size:9px;color:black;'>PUNTEGGIO</spam>";
+//SE I DUE TASTI PREMUTI NON SONO UGUALI ESEGUE QUANTO SEGUE... :dd
+/*console.log("tot PRIMO NUMERO: "+PNTOT+"  tot SECONDO NUMERO: "+SNTOT);*/} else { bottone1.style.transform="scale(1)";
+bottone2.style.transform="scale(1)";premioPnt=false;premioBomba=false;premioPntSuper=false; }
+PNTOT=0,SNTOT=0;
+}
+var barrHtml="";
+var scalo=1;
+var trasparenza=2;
+function popOut(x,y){ 
+  x.style.transform="scale("+scalo+")";
+  x.style.opacity=trasparenza;
+  y.style.opacity=trasparenza;
+  y.style.transform="scale("+scalo+")";            
+ tempo=setTimeout(function(){ popOut(x,y); },35)
+scalo+=0.3;
+trasparenza-=0.2;
+if(scalo>8){ //tu=x.innerText;spam=document.getElementById(tu);clearTimeout(tempo);spam.removeChild(x);
+//tua=y.innerText;spama=document.getElementById(tua);spama.removeChild(y);
+contHtml.removeChild(y);contHtml.removeChild(x);clearTimeout(tempo);
+scalo=1;
+trasparenza=2;
+}
+                  } 
+var suggerimenti=[],suggerimenti2=[],suggCont=0;
+//bug controlla due volte lo stesso numero con differente posizione del numero
+function controllo(){
+suggerimenti=[];
+suggerimenti2=[];
+yo=document.getElementsByTagName("button");
+for(i=0;i<yo.length;i++){
+ t=Number(yo[i].innerText);
+   for(z=1;z<yo.length;z++){ if(i==z){continue;} tt=Number(yo[z].innerText); 
+if(t==tt){ suggCont++;/*console.log("trovato bottonee: "+t+" posizione:"+i+" numero:"+tt+" posizione"+z);*/
+ suggerimenti[suggCont]=yo[i];
+ suggerimenti2[suggCont]=yo[z];
+ xSuperareLiv=suggCont;
+ numD=(suggCont)/2;
+ /*return suggerimenti.length;*/}
+}
+                        }
+suggCont=0;                   
+//risolvo bug provvisorio ... -1/2
+numeroNumeriUguali=(suggerimenti.length-1)/2;  
+//vittoria
+if(numeroNumeriUguali<=0){
+//SCRIVI SUL PALCO
+//
+palco();
+var numVinp=8*(livello+1);
+audioEffectWin.play();
+barr.innerHTML="<testoGame><h1>COMPLIMENTI!!!</h1><h2>HAI SUPERATO IL LIVELLO "+livello+"!!!</h2></testoGame>";
+//
+if(livello>1){barrHtml="<div class='statFinLiv'><testoGame><h4>Tempo Rimasto: "+tempoL+" Secondi</h4>";
+var totalePnt=punteggio+tempoL+numVinp;
+barrHtml+="<h4>Punteggio: "+punteggio+" + "+tempoL+" + Bonus Livello:"+numVinp+" </h4>";
+barrHtml+="<h4>Punteggio Attuale: "+totalePnt+" </h4></div></testoGame>";}
+barrHtml+="<testoGame><div class='button1' onclick='palco();inizioo()'>PROSSIMO LIVELLO</div></testoGame>";
+barr.innerHTML+=barrHtml+"<br><img src='img/atom-the-winner.png' width='30%'></img>";
+//funzione delle stelle img/stella.png
+if(timerL) {clearInterval(timerL);}
+////////
+return}
+document.getElementById("info").innerText="NUMERI RIMASTI:"+numeriUgual;
+//alert("Ci sono "+numeriUgual+" numeri uguali!");
+
+}
+var contHelp=1;
+function helpMe(){
+suggrmt=suggerimenti[contHelp]
+suggrmt2=suggerimenti2[contHelp]
+ console.log(suggrmt);
+ console.log(suggrmt2);
+suggrmt2.style.transform="scale(0.7)";
+suggrmt.style.transform="scale(0.7)"; 
+punteggio--;
+contHelp++;
+tempoL-=20;
+}
+var nickName="Anonimo";
+//script socket.io
+var hostTunnel="http://cw.homepc.it:8080";
+try { var scriptNode = document.createElement('script');scriptNode.src = hostTunnel+"/socket.io/socket.io.js"; // 
+			document.head.append(scriptNode);
+   }catch(err) { statusApp.innerText=("Server Offline:Classifica non disponibile");}
+scriptNode.onerror = function() {
+  statusApp.innerText=("Server Offline:Classifica non disponibile");
+};
+scriptNode.onload = function() {
+  socket = io.connect(hostTunnel);
+};
+//fine script socket 
+function finee(){
+alert("Tempo Esaurito!");
+palco();
+barr.innerHTML="<h1>MI DISPIACE HAI PERSO!!!RITENTA!</h1><h2>CLASSIFICA</h2>";
+barr.innerHTML+="<form id='formC'>Inserisci il tuo Nickname x la classifica:<br><input type='text' name='firstname' value='Anonimo'><br></form><button class='button3' onclick='ClassificaG(this)'>INVIO</button>";
+barr.innerHTML+="<h4>Punteggio Tot:"+punteggio+" </h4>";
+}
+function ClassificaG(f){f.style.display='none';
+//nickName=prompt("INSERISCI IL TUO NICKNAME X LA CLASSIFICA");
+var formcla=document.getElementById('formC');
+//if (!nickName){nickName="Anonimo";}
+var classificaFrame=document.createElement('iframe');
+classificaFrame.src=hostTunnel+"/?giocatore="+formcla[0].value+"&pnt="+punteggio;
+classificaFrame.style="width:50%;height:55%";
+barr.appendChild(classificaFrame);
+}
+function mostraClassifica(){
+var classificaFrame=document.createElement('iframe');
+classificaFrame.src=hostTunnel+"/classifica";
+classificaFrame.style="width:50%;height:55%";
+document.body.appendChild(classificaFrame);
+}
+
+function inizioo(){
+
+alert("COMPLIMENTI!!!! \n HAI COMPLETATO IL LIVELLO!!!");
+livello++;
+con+=20;
+punteggio=punteggio+(8*livello);
+numCas+=10;
+ciao();
+controllo();
+xSuperareLiv=numeroNumeriUguali;
+//timer livello
+contHelp=1;
+tempoL= Math.floor(Number(xSuperareLiv)+con-(livello*10));
+try {clearInterval(timerL);}catch(err) { console.log(err.message);}
+document.getElementById("livStatus").innerText="LIVELLO:"+livello;
+//if(con>101){ try {clearInterval(timerL);}catch(err) { console.log(err.message);}   }
+timerL=setInterval(function(){ tempoL--; 
+//aggiorna il tempo rimasto
+document.getElementById("timerCont").innerHTML=tempoL+"<br><spam style='line-height:0px;font-size:10px'>SECONDI</spam>";
+if(tempoL<0){clearInterval(timerL); finee();}
+},1000)
+
+}
+
+function controlloSuper(){
+//imposta variabile a zero di numeri trovati
+numeriUgual=0;
+
+//carica tutti i bottoni che ci sono in una variabile
+var bottoniRimanent=contHtml.getElementsByTagName('button');
+
+//crea un array con tutti i numeri dei bottoni
+var bottoniRimanenti=[];
+contCiclo=bottoniRimanent.length;
+//cicla e inserisci tutti i valori dei bottoni nell-array
+for(m=0;m<contCiclo;m++){bottoniRimanenti[m]=Number(bottoniRimanent[m].innerText);}
+
+
+for(i=0;i<contCiclo;i++){
+//se array con spazio vuoto continua con il ciclo successivo
+   if(bottoniRimanenti[i]==undefined){continue}
+        var numeroIdControllo=bottoniRimanenti[i];
+//console.log('controllo il bottone in posizione'+i+'con il valore di '+numeroIdControllo);
+   for(z=0;z<contCiclo;z++){
+        if(bottoniRimanenti[z]==undefined){continue}
+	if(i==z){continue}
+        var numeroIdControlloDue=bottoniRimanenti[z];
+//console.log('bottone1='+numeroIdControllo+'bottone2='+numeroIdControlloDue);
+      if(numeroIdControlloDue==numeroIdControllo){      				        numeriUgual++;
+//console.log('pulsanti uguali');
+        delete bottoniRimanenti[i];delete bottoniRimanenti[z];break; }
+                                     }  
+                                   }  
+
+//fine funzione
+return numeriUgual;
+}
+/*
+var NumDatabase=[],NumDatabase2=[];
+function controlloSuper(){
+numeriUgual=0;
+NumDatabase=[];NumDatabase2=[];
+contCiclo=tuttiNumeri.length;
+for(i=0;i<contCiclo;i++){
+	if(tuttiNumeri[i]==undefined){continue}
+   for(z=0;z<contCiclo;z++){
+	if(tuttiNumeri[z]==undefined){continue}
+	if(i==z){continue}
+      if(tuttiNumeri[z]==tuttiNumeri[i]){ NumDatabase[numeriUgual]=tuttiNumeri[z];
+											NumDatabase2[numeriUgual]=tuttiNumeri[i];
+      										numeriUgual++;
+                                          delete tuttiNumeri[i];delete tuttiNumeri[z]; }
+                                     }  
+                                   }  
+
+//fine funzione
+console.log("numeri trovati: "+numeriUgual);
+return numeriUgual;
+}*/
+const barr=document.getElementById("barraHome");
+let topp=100;// 100chiusa 0aperta
+let apriBchiudi=true;
+
+var palco=function ttt(){ tomtimer=setInterval('paginaScroll()',4);}
+
+//palco()= apri e chiudi il palco x messaggi invece di alert del casso... :))
+var speedBarra=0.06;
+function paginaScroll() {
+if(apriBchiudi){ speedBarra+=0.001;topp-=speedBarra; barr.style.top=topp + '%'; }else{
+speedBarra+=0.001;topp+=speedBarra; barr.style.top=topp + '%';
+}
+if(topp < 0) {
+    apriBchiudi=false;
+    clearInterval(tomtimer);
+    topp=0;
+    speedBarra=0.06;
+	return;
+  }
+if(topp > 100) {
+    apriBchiudi=true;
+    clearInterval(tomtimer);
+    topp=100;
+    speedBarra=0.06;
+    return;
+  }
+//fine funzione
+}
+//FUNZIONE X CONTROLLARE SE IL BOTTONE DA BOMBARDARE ESISTE
+var switchB=true,switchA=true;
+const buttBomba = (targetUno,targetDue) => {
+if(!targetUno){ switchA=false; } //bbnumU++;targetUno=document.getElementById(`${id-bbnumU}`); }
+if(!targetDue){ targetDue=bottoni[bottoneArrayP-2];/* switchB=false;*/ }   //bbnumd++;targetDue=document.getElementById(`${id+bbnumD}`); } 
+if(switchA){
+var topTarget=targetUno.offsetTop;
+var leftTarget=targetUno.offsetLeft;
+var gif=document.createElement('img');
+gif.src="https://img1.picmix.com/output/stamp/normal/7/5/5/2/592557_408ce.gif";
+gif.style.width='85px'
+gif.style.position='absolute';
+gif.style.top=`${topTarget-6}`;
+gif.style.left=`${leftTarget-8}`;
+targetUno.style.backgroundColor='black';
+contHtml.append(gif);
+}
+if(switchB){
+var gifD=document.createElement('img');
+var topTargetD=targetDue.offsetTop;
+var leftTargetD=targetDue.offsetLeft;
+gifD.src="https://img1.picmix.com/output/stamp/normal/7/5/5/2/592557_408ce.gif";
+gifD.style.width='85px'
+gifD.style.position='absolute';
+gifD.style.top=`${topTargetD-6}`;
+gifD.style.left=`${leftTargetD-8}`;
+targetDue.style.backgroundColor='black';
+contHtml.append(gifD);}
+
+boom.play();
+
+var gtimer=setTimeout( () => {if(switchA){contHtml.removeChild(gif);contHtml.removeChild(targetUno)}
+                              if(switchB){contHtml.removeChild(targetDue);contHtml.removeChild(gifD);}
+  switchB=true;switchA=true;},600  )
+
+}
+
+
+</script>
+
+</body>
+</html>
