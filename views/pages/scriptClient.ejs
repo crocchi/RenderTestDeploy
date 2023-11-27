@@ -35,6 +35,7 @@ let getTime =()=> {
   socket.on('chat message', function(msg,acc,exit) {
 
     var item = document.createElement('li');
+    item.className='message parker';
     //console.log('nome:'+acc);
     //const sockets = await io.fetchSockets();
     //console.log(sockets[0].data.username);
@@ -48,7 +49,8 @@ let getTime =()=> {
     //item.textContent = acc+':'+msg;
     item.innerHTML = acc+':'+msg+' '// <time>'+time+'</time>
     messages.appendChild(item);
-    window.scrollTo(0, document.body.scrollHeight);
+    //window.scrollTo(0, document.body.scrollHeight);
+    document.querySelector("#myModal > div").scrollTo(0,799)
     //window.scrollTo(top);
   });
 
@@ -63,6 +65,7 @@ socket.on("chatRecord", (data) => {
 if (loading){
   for (let i = data.length-10; i < data.length; i++) {
   var item = document.createElement('li');
+  item.className='message parker';
   item.textContent = data[i].nick+':'+data[i].text;
   messages.appendChild(item);
   }

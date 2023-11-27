@@ -1105,6 +1105,9 @@ input, select, textarea {
 /* Modal Content */
 .modal-content {
   position: fixed;
+  overflow-y: auto;
+    overflow-x: hidden;
+    height: 80%;
   bottom: 0;
   background-color: #fefefe;
   width: 100%;
@@ -1133,14 +1136,19 @@ input, select, textarea {
   padding: 2px 16px;
   background-color: #5cb85c;
   color: white;
+  position: fixed;
+    width: 100%;
 }
 
-.modal-body {padding: 2px 16px;}
+/*.modal-body {/*padding: 2px 16px;}*/
 
 .modal-footer {
   padding: 2px 16px;
   background-color: #5cb85c;
   color: white;
+  position: fixed;
+    width: 100%;
+    bottom: 0;
 }
 .modal-body p {
     color: #000000;
@@ -1151,6 +1159,32 @@ ul#messages li {
 input#input {
     color: #000000;
 }
+.modal-header span.label {
+    color: #000000;
+    font-weight: 600;
+    padding: 1%;
+}
+.message {
+			box-sizing: border-box;
+			padding: 0.5rem 1rem;
+			margin: 1rem;
+			background: #000000;
+			border-radius: 1.125rem 1.125rem 1.125rem 0;
+			min-height: 2.25rem;
+			width: fit-content;
+			max-width: 66%;
+			
+			box-shadow: 
+				0 0 2rem rgba(black, 0.075),
+				0rem 1rem 1rem -1rem rgba(black, 0.1);
+			}
+			.parker {
+				margin: 1rem 1rem 1rem auto ;
+				border-radius: 1.125rem 1.125rem 0 1.125rem;
+				background: lightblue;
+				color: black;
+			}
+			
 /* Add Animation */
 @-webkit-keyframes slideIn {
   from {bottom: -300px; opacity: 0} 
