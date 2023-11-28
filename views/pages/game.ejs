@@ -54,7 +54,7 @@
 
                     <div id='modal-body' class="modal-body hide">
                             <ul id="messages"></ul>
-                            <br>
+                            <br><br>
                      <div id='modal-footer' class="modal-footer">
                         <form id="form" action="">
                         <input id="input" autocomplete="off" /><button>Send</button>
@@ -83,6 +83,21 @@
                                 <button>SAVE</button>
                             </div>
                         <br>
+                        </div>
+
+                        <div class="col-6 col-12-xsmall">
+                            <div class="">
+                                <h2>Browser detect</h2>
+                                <button onclick="browserCheck()">Check</button>
+                                <textarea id="browserTextArea" name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
+                          		
+                               	
+                            </div>
+                        <br>
+                        </div>
+
+                        <div class="col-6 col-12-small">
+                           	
                         </div>
 
                         <div class="col-12">
@@ -115,6 +130,41 @@
 			</div>
 		</div>
 		<script>
+
+
+let browserCheck= ()=> {
+    // compatibility 100% info browser
+	let nav =         navigator.userAgent;
+    let languageSet=  navigator.language;
+    let vendor=       navigator.vendor
+    // no comp firefox,safari,firefox androdi,safari ios,webview android
+    let brand=        navigator.userAgentData.brands[0].brand;
+    let brandVersion= navigator.userAgentData.brands[0].version;
+    
+    let domArea=document.getElementById('browserDtext');
+    let domA=document.getElementById('browserTextArea');
+    let tempF="";
+    let dataTot=[nav,languageSet,vendor,brand,brandVersion];
+    let dataInfo=["User Agent:","Language:","Vendor:","Browser:","Version:"]
+    dataTot.forEach((currentElement,index) => {
+         /* 
+         let p=document.createElement('p');
+         p.innerText=dataInfo[index]+" "+dataTot[index];
+         domArea.appendChild(p);
+         ... */ 
+
+         tempF+=dataInfo[index]+" "+dataTot[index]+"\n";
+        })
+        domA.innerHTML=tempF;
+/*  browserTextArea
+    domArea.innerHTML="<p> User Agent:"+nav+"</p> <p>Language:"+languageSet +" </p>";
+    domArea.innerHTML+="<p> Vendor:"+vendor+"</p>";
+    domArea.innerHTML+="<p><b> Browser</b>:"+brand+"</p>";
+    domArea.innerHTML+="<p> Version:"+brandVersion+"</p><br>";
+    */
+}
+
+
 			window.onload = function() { document.body.classList.remove('is-preload'); }
 			window.ontouchmove = function() { return false; }
 			window.onorientationchange = function() { document.body.scrollTop = 0; }
@@ -215,6 +265,16 @@ window.onclick = function(event) {
     closeModal();
   }
 }
+//SAFARI BUG DONT CLOSE IF YOU CLICK OUT OF MODAL AREA
+/*
+window.addEventListener("touchstart",  function(event) {
+  
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+  
+})
+*/
         </script>
           <%- include('./scriptClient'); %>
 	</body>
