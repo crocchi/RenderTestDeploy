@@ -138,8 +138,13 @@ let browserCheck= ()=> {
     let languageSet=  navigator.language;
     let vendor=       navigator.vendor
     // no comp firefox,safari,firefox androdi,safari ios,webview android
-    let brand=        navigator.userAgentData.brands[0].brand;
-    let brandVersion= navigator.userAgentData.brands[0].version;
+    try {
+        let brand=        navigator.userAgentData.brands[0].brand;
+        let brandVersion= navigator.userAgentData.brands[0].version;
+} catch (err) {
+  console.log("browser not Compatible 100%")
+}
+   
     
     let domArea=document.getElementById('browserDtext');
     let domA=document.getElementById('browserTextArea');
