@@ -14,7 +14,8 @@ let getTime =()=> {
     let h = d.getHours();
     let m = d.getMinutes();
     let s =d.getSeconds();
-    return (h + ":" + m + ":" + s)
+    let tim=(h + ":" + m + ":" + s);
+    return tim
 } 
 
 
@@ -25,30 +26,41 @@ let getTime =()=> {
   form.addEventListener('submit', function(e) {
     e.preventDefault();
     if (input.value) {
-      //let ttt=getTime();
-      socket.emit('chat message', input.value);
+      let timeNow=getTime();
+      socket.emit('chat message', input.value,timeNow);
       input.value = '';
     }
   });
 
   //RICEVE CHAT MESSAGE 
-  socket.on('chat message', function(msg,acc,exit) {
+  socket.on('chat message', function(msg,acc,exit,timee) {
 
-    var item = document.createElement('li');
+    var item = document.createElement('div');
     item.className='message parker';
-    //console.log('nome:'+acc);
-    //const sockets = await io.fetchSockets();
-    //console.log(sockets[0].data.username);
+
     if(exit){
         item.textContent = acc+' '+msg+'';
         messages.appendChild(item);
         return
     }
-
-
+//   <time></time>
     //item.textContent = acc+':'+msg;
-    item.innerHTML = acc+':'+msg+' '// <time>'+time+'</time>
+    item.innerHTML = "<chat>"+acc+'</chat>:'+msg+'<time>'+timee+'</time>';
     messages.appendChild(item);
+
+ /*   
+//provo a incollare lorario del msg ad elemento html con getboundclient
+let msgTime = document.createElement('time');
+  // per assegnare degli stili sarebbe preferibile usare una classe CSS
+  //msgTime.style.cssText = "position:absolute; color: red";
+  msgTime.innerText=timee;
+  let coords = item.getBoundingClientRect();
+  msgTime.style.left = (coords.right-45) + "px";
+  msgTime.style.top = (coords.top-4) + "px";
+  //msgTime.style.right = coords.right + "px";
+
+  messages.appendChild(msgTime);
+*/
     //window.scrollTo(0, document.body.scrollHeight);
     document.querySelector("#myModal > div").scrollTo(0,799)
     //window.scrollTo(top);
@@ -64,9 +76,10 @@ let loading=true;
 socket.on("chatRecord", (data) => {
 if (loading){
   for (let i = data.length-10; i < data.length; i++) {
-  var item = document.createElement('li');
+  var item = document.createElement('div');
   item.className='message parker';
-  item.textContent = data[i].nick+':'+data[i].text;
+  //item.textContent = data[i].nick+': '+data[i].text;
+  item.innerHTML = "<chat>"+data[i].nick+'</chat>: '+data[i].text+'<time>('+data[i].data+')</time>';
   messages.appendChild(item);
   }
 }

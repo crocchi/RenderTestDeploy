@@ -27,11 +27,16 @@
                         <img src="https://latitanti.altervista.org/logoBG.png" class="fa-solid fa-play"></img>
 						<h1>ButtonGame v.0.3</h1>
 						<p>#nodejs #socket.io &nbsp;&bull;&nbsp;#ejs #express &nbsp;&bull;&nbsp; #Render Web Service</p>
+                        <h2 class="popupDesk">In questo puzzle dovrete accoppiare i numeri uguali.</h2>
+                        <ul class="popupDesk">  
+                            <li> bottoni con i numeri uguali avranno anche lo stesso colore </li>
+                            <li> Cerca di distruggere tutti i bottoni per ricevere il max punteggio </li>
+                        </ul>
 						<nav>
 							<ul>
 							<!--	<li><a href="#" class="fa-solid fa-house"><span class="label">Home</span></a></li>-->
-								<li><a href="#" class="fa-solid fa-play"><span class="label">PlayGame</span></a></li>
-								<li><a href="#" class="fa-solid fa-star"><span class="label">Stats</span></a></li>
+								<li><a href="#" onclick="openPage('play');" class="fa-solid fa-play"><span class="label">PlayGame</span></a></li>
+								<li><a href="#" onclick="openPage('stats');"  class="fa-solid fa-star"><span class="label">Stats</span></a></li>
                                 <li><a href="#" onclick="openPage('chat');"  id="myBtn" class="fa-solid fa-comment"><span class="label">Chat</span></a></li>
                                 
 								<li><a href="#" onclick="openPage('conf');" id="myBtnConf" class="fa-solid fa-gear"><span class="label">Conf</span></a></li>
@@ -47,11 +52,11 @@
                 <div class="modal-content">
                             <div class="modal-header">
                                 <span class="close">&times;</span>
-                                <a id='labelLogo' class="fa-solid fa-comment"></a>
+                                <span id='labelLogo' class="fa-solid fa-comment"></span>
                                 <span id="labelPage" class="label"> CHAT </span>
                             </div>
 
-
+                 <!--        PAGINA CHAT           -->
                     <div id='modal-body' class="modal-body hide">
                             <ul id="messages"></ul>
                             <br><br>
@@ -62,7 +67,7 @@
                      </div>
                     </div>
 
-
+                    <!--        PAGINA CONFIGURAZIONE           -->
                     <div id='modal-conf-page' class="modal-body hide">
                         <h2>COnfigurazioni</h2>
                         <br>
@@ -112,10 +117,21 @@
                         <br>
                     </div> 
 
+
+    <!--          PAGINA STATS           -->
                     <div id='modal-conf-stat' class="modal-body hide">
                         <h2>Classifica</h2>
                         <br>
                     </div> 
+
+
+    <!--          PAGINA play         -->
+    <div id='modal-conf-game' class="modal-body hide">
+        <h2>Play The Game</h2>
+        <br>
+    </div> 
+
+
 
                 </div>
                     <!-- FINE Modal content -->
@@ -223,7 +239,7 @@ let openPage = async (page)=> {//debugger
 
         let testoHeader= document.getElementById('labelPage');
         testoHeader.innerText='CONFIGURAZIONI';
-        console.log('sto configurando...')
+       // console.log('sto configurando...')
 
         let logoHeader= document.getElementById('labelLogo');
         logoHeader.className='fa-solid fa-gear';
@@ -243,7 +259,42 @@ let openPage = async (page)=> {//debugger
 
         let logoHeader= document.getElementById('labelLogo');
         logoHeader.className='fa-solid fa-comment';
+        window.scrollTo(0, document.body.scrollHeight);
+        document.querySelector("#myModal > div").scrollTo(0,800)
 
+    }
+
+
+    if (page==='stats'){
+       let page= document.getElementById('modal-conf-game')
+       //se la pagine contiene la classe hide la leva...altrimenti nn fa nulla...loool;
+       if(page.classList.contains("hide")){
+              page.classList.toggle("hide");
+        } else{ };
+
+        let testoHeader= document.getElementById('labelPage');
+        testoHeader.innerText='CLassifica';
+       // console.log('sto configurando...')
+
+        let logoHeader= document.getElementById('labelLogo');
+        logoHeader.className='fa-solid fa-star';
+
+    }
+
+
+    if (page==='play'){
+       let page= document.getElementById('modal-conf-game')
+       //se la pagine contiene la classe hide la leva...altrimenti nn fa nulla...loool;
+       if(page.classList.contains("hide")){
+              page.classList.toggle("hide");
+        } else{ };
+
+        let testoHeader= document.getElementById('labelPage');
+        testoHeader.innerText='Play The Game';
+       // console.log('sto configurando...')
+
+        let logoHeader= document.getElementById('labelLogo');
+        logoHeader.className='fa-solid fa-play';
 
     }
 }
@@ -298,7 +349,7 @@ const closeModal =()=>{
 }
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-    console.log(event.target);
+   // console.log(event.target);
   if (event.target == modal) {
     modal.style.display = "none";
     closeModal();

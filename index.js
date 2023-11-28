@@ -73,11 +73,12 @@ io.on('connection', async (socket) => {
       });
 
     socket.on('chat message', (msg,time) => {
-        console.log(socket.data.username+': ' + msg);
-        io.emit('chat message', msg,socket.data.username);
+        console.log(socket.data.username+': ' + msg+" ("+time+")" );
+        io.emit('chat message', msg, socket.data.username, false, time);
     let msgUpdate = new ChatMsg({
        nick:socket.data.username,
-       text:msg
+       text:msg,
+       data:time
       });
     msgUpdate.save()//.then(() => console.log('meow'));
       });
