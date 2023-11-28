@@ -1135,7 +1135,7 @@ input, select, textarea {
 }
 
 .modal-header {
-  padding: 2px 16px;
+  padding: 0.5em 16px;
   background-color: #5cb85c;
   color: white;
   position: fixed;
@@ -1145,7 +1145,7 @@ input, select, textarea {
 /*.modal-body {/*padding: 2px 16px;}*/
 
 .modal-footer {
-  padding: 2px 16px;
+  padding: 0.4em 16px;
   background-color: #5cb85c;
   color: white;
   position: fixed;
@@ -1169,6 +1169,7 @@ input#input {
 }
 div#modal-conf-page {
     color: #7f888f;
+	margin-top: 1em;
 }
 a#labelLogo {
     font-size: x-large;
@@ -1396,4 +1397,29 @@ input[type="radio"] + label:before {
   from {opacity: 0} 
   to {opacity: 1}
 }
+
+
+.pic {
+	width: 4rem;
+	height: 4rem;
+	background-size: cover;
+	background-position: center;
+	border-radius: 50%;
+}
+
+.contact {
+	position: relative;
+	margin-bottom: 1rem;
+	margin: 1em 1em;
+	padding-left: 5rem;
+	height: 4.5rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+	.pic {
+		position: absolute;
+		left: 0;
+	}
+	.pic.rogers { background-image: url('https://vignette.wikia.nocookie.net/marvelcinematicuniverse/images/7/7c/Cap.America_%28We_Don%27t_Trade_Lives_Vision%29.png')}
 </style>
