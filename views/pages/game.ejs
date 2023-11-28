@@ -89,7 +89,7 @@
                             <div class="">
                                 <h2>Browser detect</h2>
                                 <button onclick="browserCheck()">Check</button>
-                                <textarea id="browserTextArea" name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
+                                <textarea id="browserTextArea" name="demo-message" id="demo-message" placeholder="Enter your message" rows="3"></textarea>
                           		
                                	
                             </div>
@@ -172,6 +172,36 @@ let browserCheck= ()=> {
     domArea.innerHTML+="<p> Version:"+brandVersion+"</p><br>";
     */
 }
+
+
+// Funzione per ottenere il nome e la versione del browser
+function getBrowserInfo() {
+  var ua = navigator.userAgent;
+  var tem;
+    var M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+    if (/trident/i.test(M[1])) {
+        tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
+        return { name: 'IE', version: (tem[1] || '') };
+    }
+    if (M[1] === 'Chrome') {
+        tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
+        if (tem != null) return { name: tem[1].replace('OPR', 'Opera'), version: tem[2] };
+    }
+    M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
+    tem = ua.match(/version\/(\d+)/i);
+    if (tem != null) M.splice(1, 1, tem[1]);
+    return {
+        name: M[0],
+        version: M[1]
+    };
+}
+
+// Ottieni le informazioni sul browser
+var browser = getBrowserInfo();
+
+// Mostra le informazioni del browser nella console
+document.getElementById('browserTextArea').innerText="Browser:"+browser.name+"\n "+"Versione:"+browser.version;
+
 
 
 			window.onload = function() { document.body.classList.remove('is-preload'); }
