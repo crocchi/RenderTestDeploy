@@ -129,6 +129,19 @@
     <div id='modal-conf-game' class="modal-body hide">
         <h2>Play The Game</h2>
         <br>
+        <div class="modal-body">
+                
+        <div class="contact">
+            <img class="pic imgPlaygame" src="https://latitanti.altervista.org/BG/img/png.png" ></img>
+            <h2>CAMPAIGN </h2>
+        </div>
+
+        <div class="contact">
+            <img class="pic imgPlaygame" src="https://latitanti.altervista.org/BG/img/png2.png" ></img>
+            <h2>1 VS 1</h2>
+        </div>
+
+         </div>
     </div> 
 
 
@@ -310,24 +323,6 @@ let btnConf = document.getElementById("myBtnConf");
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
-// When the user clicks on the button, open the modal
-/*btn.onclick = function(page) {
-  modal.style.display = "block";
-}*/
-
-/*btnConf.onclick = function(page) {
-
-document.getElementById("labelPage").innerText='CONFIGURAZIONI'
-//document.getElementById("labelLogo");
- if(document.getElementById("modal-body").classList.contains("hide")){
-
- }else{
-document.getElementById("modal-body").classList.toggle("hide");
-document.getElementById("modal-body-page").classList.toggle("hide");
-//document.getElementById("modal-footer");
-}
- modal.style.display = "block";
-}*/
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
@@ -340,12 +335,16 @@ const closeModal =()=>{
     let pagecon =document.getElementById('modal-conf-page')        // PAGINA CONFIGURAZIONE
   let pagecha= document.getElementById('modal-body')  // PAGINA CHAT
   let pageclas= document.getElementById('modal-conf-stat')  // PAGINA STAT CLASSSSIFICA
+  let pageGame= document.getElementById('modal-conf-game');
+  
              //se la pagine contiene la classe hide la leva...altrimenti nn fa nulla...loool;
        if(pagecon.classList.contains("hide")){ } else{ pagecon.classList.toggle("hide");  };
        
        if(pagecha.classList.contains("hide")){ } else{ pagecha.classList.toggle("hide");  };
 
        if(pageclas.classList.contains("hide")){ } else{ pageclas.classList.toggle("hide");  };
+
+       if(pageGame.classList.contains("hide")){ } else{ pageGame.classList.toggle("hide");  };
 }
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
