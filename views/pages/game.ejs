@@ -152,6 +152,9 @@ let browserCheck= ()=> {
     let dataTot=[nav,languageSet,vendor,brand,brandVersion];
     let dataInfo=["User Agent:","Language:","Vendor:","Browser:","Version:"]
     dataTot.forEach((currentElement,index) => {
+        if (currentElement==null){ 
+            
+        }else{
          /* 
          let p=document.createElement('p');
          p.innerText=dataInfo[index]+" "+dataTot[index];
@@ -159,7 +162,7 @@ let browserCheck= ()=> {
          ... */ 
 
          tempF+=dataInfo[index]+" "+dataTot[index]+"\n";
-        })
+        }})
         domA.innerHTML=tempF;
 /*  browserTextArea
     domArea.innerHTML="<p> User Agent:"+nav+"</p> <p>Language:"+languageSet +" </p>";
