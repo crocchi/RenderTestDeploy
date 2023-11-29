@@ -50,7 +50,9 @@
             <div id="myModal" class="modal">
                      <!-- START Modal content -->
                         <!-- Modal content -->
-                <div class="modal-content">
+
+                        <!--header del modal ..MOdifico ogni volta quando apro un modal-->
+                <div id="modal-document" class="modal-content">
                             <div class="modal-header">
                                 <span class="close">&times;</span>
                                 <span id='labelLogo' class="fa-solid fa-comment"></span>
@@ -150,6 +152,13 @@
          </div>
     </div> 
 
+
+     <!--          PAGINA PLAYGROUND     .gaming-area -->
+     <div id='modal-playGround' class="modal-body hide">
+        <h2>Giochi Area</h2>
+        <br>
+    </div> 
+
                 </div>
                     <!-- FINE Modal content -->
             </div> 
@@ -163,23 +172,36 @@
 			</div>
 		</div>
         <%- include('./scriptClient'); %>
+        <%- include('../../utility/scriptClientModal'); %>
 		<script>
 			
             let playStart = (liv,num)=>{
             socket.emit('game start',liv,num );// liv=1,num=20
             }
 
-            
-        socket.on('gameSet', (data)=> {
+
+        socket.on('gameSet', (data,typeGame)=> {
             console.log(data);
 
+            if(typeGame==="campain"){  
+
+                openPage('playGround');
+            }else{
+
+                // if(typeGame==="1vs1"
+            //messaggio x testare anzi x avvisare i giocatori x il 1vs1
             let page= document.getElementById('waitingplayer')
        //se la pagine contiene la classe hide la leva...altrimenti nn fa nulla...loool;
        if(page.classList.contains("hide")){
               page.classList.toggle("hide");
         } else{ };
             document.getElementById('waitingplayerText').innerText=data;
+        }
+
+    ///QUI CREO LA LOGICA DEL GIOCO SINGOLO CAMPAIGN UNA VOLTA RICEVUTO ARRAY CON I NUMERI
+       
             
+        
         })
 
 
@@ -192,7 +214,7 @@
 
         </script>
 
-          <%- include('../../utility/scriptClientModal'); %>
+         
           <%- include('../../utility/browserCheck'); %>
 	</body>
 </html>

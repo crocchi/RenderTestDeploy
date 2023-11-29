@@ -61,10 +61,10 @@ io.on('connection', async (socket) => {
     //READING DATABASE MSG
     let dataTemp=await ChatMsg.find({});
     //send chat record
-    io.emit('chatRecord', dataTemp);
+    io.to(socket.id).emit('chatRecord', dataTemp);
     
     //set username
-    io.emit('setNick', socket.data.username);
+    io.to(socket.id).emit('setNick', socket.data.username);
     //show user logged
     io.emit('chat message', ' join now',socket.data.username,true);
 
@@ -86,6 +86,8 @@ io.on('connection', async (socket) => {
     msgUpdate.save()//.then(() => console.log('meow'));
       });
 
+//
+
   socket.on('game start', (liv,num) => {
 
     //CREAZIONE NUMERI CASUALI
@@ -104,8 +106,8 @@ io.on('connection', async (socket) => {
   for (let i = 0; i < qnt; i++) {
     numberData.push(Math.floor(Math.random() * numeri));
   }
-    //INVIA DATI AL CANALE APPENA APERTO X UTENTE
-    io.to(socket.id).emit("gameSet", numberData);
+    //INVIA DATI AL CANALE APPENA APERTO X UTENTE, 2 callback metti tipo del gioco
+    io.to(socket.id).emit("gameSet", numberData,"campain");
     //io.emit('gameSet', numberData);
 
   })
@@ -130,6 +132,10 @@ io.on('connection', async (socket) => {
       //manda msg a quelli del canale
       io.to(numberPlayer[0]).emit('gameSet',"trovati i player x la partita.. ["+numberPlayer+"]");
       numberPlayer=[];
+    //QUI INVIAMO DATI X INIZIARE IL GIOCO 1vs1
+    // dp...MO FACCIO PRIMA LE BOLLE ..UHIUUGYFT
+
+
     }else{ //SE è IL PRIMO PLAYER IN ASCOLTO PER LA PARTITA
      
       io.to(socket.id).emit('gameSet', "sei in attesa x la partita...\n"+socket.data.username); 

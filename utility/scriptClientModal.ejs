@@ -71,6 +71,34 @@ let openPage = async (page)=> {//debugger
         logoHeader.className='fa-solid fa-play';
 
     }
+
+
+    if (page==='playGround'){
+
+      // QUANDO APRE LA FUNZIONE QUANDO GIà SEI NELLA PAGINA PLAY QUINDI CHIUDI IL MODAL E NE RIAPRI UN ALTRO NUOVO
+      closeModal();
+
+       let page= document.getElementById('modal-playGround')
+       //se la pagine contiene la classe hide la leva...altrimenti nn fa nulla...loool;
+       if(page.classList.contains("hide")){
+              page.classList.toggle("hide");
+        } else{ };
+
+        //IMPOSTA TESTO DELL HEADER DELLA PAGINA MODAL
+        let testoHeader= document.getElementById('labelPage');
+        testoHeader.innerText='Play Campain';
+       // console.log('sto configurando...')
+
+        let logoHeader= document.getElementById('labelLogo');
+        logoHeader.className='fa-solid fa-play';
+
+        //IMPOSTA IL MODAL A TUTTO SKERMO 
+        let modalWin=document.getElementById("modal-document");
+        modalWin.classList.toggle("gaming-area");
+
+    }
+
+
 }
 
 
@@ -85,11 +113,6 @@ let btnConf = document.getElementById("myBtnConf");
 var span = document.getElementsByClassName("close")[0];
 
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-  closeModal();
-}
 
 //chiude tutte le modal
 const closeModal =()=>{
@@ -115,7 +138,13 @@ window.onclick = function(event) {
     closeModal();
   }
 }
-//SAFARI BUG DONT CLOSE IF YOU CLICK OUT OF MODAL AREA
+
+// When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+  modal.style.display = "none";
+  closeModal();
+}
+//SAFARI BUG DONT CLOSE in mobile version (touchstart function instead)IF YOU CLICK OUT OF MODAL AREA
 /*
 window.addEventListener("touchstart",  function(event) {
   
