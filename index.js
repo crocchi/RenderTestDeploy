@@ -1,6 +1,7 @@
 //USE EXPRESS ...CAUSE IM LAZY
 let express = require('express');
 let app = express();
+const PORT = 8000
 const bodyParser = require('body-parser');
 //CONF bodyparser
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -41,7 +42,7 @@ app.get('/game', function(req, res) {
 });
 
 
-server.listen(8000);
+server.listen(PORT);
 
 const ChatMsg = require('./db/chat-model')
 

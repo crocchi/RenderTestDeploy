@@ -13,3 +13,7 @@ github
 testing chat socket.io
 and restoring old number game i made 5 years ago for learning purpose ...
 deploy on render cloud service
+
+
+npm install
+node index.js
