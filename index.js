@@ -113,7 +113,7 @@ io.on('connection', async (socket) => {
     numberPlayer.push(socket.data.username);
     console.log(numberPlayer);
     if(numberPlayer.length >= 2){// SE CI SONO DUE PLAYER NELL'ARRAY DI ATTESA
-      io.emit('gameSet',"trovati i player x la partita.."+numberPlayer);
+      io.emit('gameSet',"trovati i player x la partita.. ["+numberPlayer+"]");
       numberPlayer=[];
     }else{ io.emit('gameSet', "sei in attesa x la partita...\n"+socket.data.username); }
 

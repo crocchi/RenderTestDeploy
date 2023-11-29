@@ -140,8 +140,11 @@
         <div onclick="playStart1vs1()" class="contact">
             <img class="pic imgPlaygame" src="https://latitanti.altervista.org/BG/img/png2.png" ></img>
             <h2>1 VS 1</h2>
-            <i id='waitingplayer' class="fa-solid fa-hourglass-start hide"></i>
-        
+            <div id='waitingplayer' class="hide">
+            <i class="fa-solid fa-hourglass-start ">
+                <p id='waitingplayerText'> </p>
+            </i>
+            </div>
         </div>
         <br>
          </div>
@@ -166,9 +169,16 @@
             socket.emit('game start',liv,num );// liv=1,num=20
             }
 
+            
         socket.on('gameSet', (data)=> {
             console.log(data);
-            document.getElementById('waitingplayer').innerText=data;
+
+            let page= document.getElementById('waitingplayer')
+       //se la pagine contiene la classe hide la leva...altrimenti nn fa nulla...loool;
+       if(page.classList.contains("hide")){
+              page.classList.toggle("hide");
+        } else{ };
+            document.getElementById('waitingplayerText').innerText=data;
             
         })
 
@@ -176,7 +186,7 @@
         let playStart1vs1 = (liv)=>{
             console.log("invio richiesta al server [ 1 versus 1 ] ")
             socket.emit('gameOnline 1vs1','join' );// liv=1,num=20
-            document.getElementById('waitingplayer').innerText=' Invio richiesta al server...';
+            document.getElementById('waitingplayerText').innerText=' Invio richiesta al server...';
             }
 
 
