@@ -1,3 +1,9 @@
+<script>
+  window.onload = function() { document.body.classList.remove('is-preload'); }
+        window.ontouchmove = function() { return false; }
+        window.onorientationchange = function() { document.body.scrollTop = 0; }
+</script>  
+
 <script src="/socket.io/socket.io.js"></script>
     <script>
         let socket;
@@ -17,6 +23,7 @@ let getTime =()=> {
     let tim=(h + ":" + m + ":" + s);
     return tim
 } 
+
 
 
   let form = document.getElementById('form');

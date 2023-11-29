@@ -45,6 +45,7 @@ server.listen(8000);
 
 const ChatMsg = require('./db/chat-model')
 
+let numberPlayer=[];
 
 io.on('connection', async (socket) => {
     //console.log(socket.handshake.query);
@@ -82,6 +83,43 @@ io.on('connection', async (socket) => {
       });
     msgUpdate.save()//.then(() => console.log('meow'));
       });
+
+  socket.on('game start', (liv,num) => {
+
+    //CREAZIONE NUMERI CASUALI
+    //numeri probabili che possono uscire da 1-10
+    let numeri=10;
+
+    //quantità di numeri
+    let qnt=num//20;
+
+    let numberData=[];
+
+  for (let i = 0; i < qnt; i++) {
+    numberData.push(Math.floor(Math.random() * numeri));
+  }
+    io.emit('gameSet', numberData);
+
+  })
+
+
+  socket.on('gameOnline 1vs1', async (liv,num) => {
+    
+    //socket.data.username;
+    numberPlayer.push(socket.data.username);
+    console.log(numberPlayer);
+    if(numberPlayer.length >= 2){// SE CI SONO DUE PLAYER NELL'ARRAY DI ATTESA
+      io.emit('gameSet',"trovati i player x la partita.."+numberPlayer);
+      numberPlayer=[];
+    }else{ io.emit('gameSet', "sei in attesa x la partita...\n"+socket.data.username); }
+
+ 
+
+  })
+
+
+
+
 
   });
 

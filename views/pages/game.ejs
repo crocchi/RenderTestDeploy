@@ -132,12 +132,12 @@
         <br>
         <div class="modal-body">
                 
-        <div class="contact">
+        <div onclick="playStart(1,20)" class="contact">
             <img class="pic imgPlaygame" src="https://latitanti.altervista.org/BG/img/png.png" ></img>
             <h2>CAMPAIGN </h2>
         </div>
 
-        <div class="contact">
+        <div onclick="playStart1vs1()" class="contact">
             <img class="pic imgPlaygame" src="https://latitanti.altervista.org/BG/img/png2.png" ></img>
             <h2>1 VS 1</h2>
         </div>
@@ -157,13 +157,26 @@
 
 			</div>
 		</div>
+        <%- include('./scriptClient'); %>
 		<script>
-			window.onload = function() { document.body.classList.remove('is-preload'); }
-			window.ontouchmove = function() { return false; }
-			window.onorientationchange = function() { document.body.scrollTop = 0; }
-		
+			
+            let playStart = (liv,num)=>{
+            socket.emit('game start',liv,num );// liv=1,num=20
+            }
+
+        socket.on('gameSet', (data)=> {
+            console.log(data);
+        })
+
+
+        let playStart1vs1 = (liv)=>{
+            console.log("invio richiesta al server [ 1 versus 1 ] ")
+            socket.emit('gameOnline 1vs1','join' );// liv=1,num=20
+            }
+
+
         </script>
-          <%- include('./scriptClient'); %>
+
           <%- include('../../utility/scriptClientModal'); %>
           <%- include('../../utility/browserCheck'); %>
 	</body>
