@@ -1,0 +1,128 @@
+<script>
+//openPage('conf')
+let openPage = async (page)=> {//debugger
+
+    modal.style.display = "block";
+
+    if (page==='conf'){
+       let page= document.getElementById('modal-conf-page')
+       //se la pagine contiene la classe hide la leva...altrimenti nn fa nulla...loool;
+       if(page.classList.contains("hide")){
+              page.classList.toggle("hide");
+        } else{ };
+
+        let testoHeader= document.getElementById('labelPage');
+        testoHeader.innerText='CONFIGURAZIONI';
+       // console.log('sto configurando...')
+
+        let logoHeader= document.getElementById('labelLogo');
+        logoHeader.className='fa-solid fa-gear';
+
+    }
+
+
+    if (page==='chat'){
+       let page= document.getElementById('modal-body')
+       //se la pagine contiene la classe hide la leva...altrimenti nn fa nulla...loool;
+       if(page.classList.contains("hide")){
+              page.classList.toggle("hide");
+        } else{ };
+
+        let testoHeader= document.getElementById('labelPage');
+        testoHeader.innerText='CHAT';
+
+        let logoHeader= document.getElementById('labelLogo');
+        logoHeader.className='fa-solid fa-comment';
+        window.scrollTo(0, document.body.scrollHeight);
+        document.querySelector("#myModal > div").scrollTo(0,800)
+
+    }
+
+
+    if (page==='stats'){
+       let page= document.getElementById('modal-conf-stat')
+       //se la pagine contiene la classe hide la leva...altrimenti nn fa nulla...loool;
+       if(page.classList.contains("hide")){
+              page.classList.toggle("hide");
+        } else{ };
+
+        let testoHeader= document.getElementById('labelPage');
+        testoHeader.innerText='CLassifica';
+       // console.log('sto configurando...')
+
+        let logoHeader= document.getElementById('labelLogo');
+        logoHeader.className='fa-solid fa-star';
+
+    }
+
+
+    if (page==='play'){
+       let page= document.getElementById('modal-conf-game')
+       //se la pagine contiene la classe hide la leva...altrimenti nn fa nulla...loool;
+       if(page.classList.contains("hide")){
+              page.classList.toggle("hide");
+        } else{ };
+
+        let testoHeader= document.getElementById('labelPage');
+        testoHeader.innerText='Play The Game';
+       // console.log('sto configurando...')
+
+        let logoHeader= document.getElementById('labelLogo');
+        logoHeader.className='fa-solid fa-play';
+
+    }
+}
+
+
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+let btnConf = document.getElementById("myBtnConf");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+  closeModal();
+}
+
+//chiude tutte le modal
+const closeModal =()=>{
+    let pagecon =document.getElementById('modal-conf-page')        // PAGINA CONFIGURAZIONE
+  let pagecha= document.getElementById('modal-body')  // PAGINA CHAT
+  let pageclas= document.getElementById('modal-conf-stat')  // PAGINA STAT CLASSSSIFICA
+  let pageGame= document.getElementById('modal-conf-game');
+  
+             //se la pagine contiene la classe hide la leva...altrimenti nn fa nulla...loool;
+       if(pagecon.classList.contains("hide")){ } else{ pagecon.classList.toggle("hide");  };
+       
+       if(pagecha.classList.contains("hide")){ } else{ pagecha.classList.toggle("hide");  };
+
+       if(pageclas.classList.contains("hide")){ } else{ pageclas.classList.toggle("hide");  };
+
+       if(pageGame.classList.contains("hide")){ } else{ pageGame.classList.toggle("hide");  };
+}
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+   // console.log(event.target);
+  if (event.target == modal) {
+    modal.style.display = "none";
+    closeModal();
+  }
+}
+//SAFARI BUG DONT CLOSE IF YOU CLICK OUT OF MODAL AREA
+/*
+window.addEventListener("touchstart",  function(event) {
+  
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+  
+})
+*/
+</script>

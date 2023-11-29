@@ -1,6 +1,80 @@
 <script>
  
+let browserCheck= ()=> {
+    // compatibility 100% info browser
+	let nav =         navigator.userAgent;
+    let languageSet=  navigator.language;
+    let vendor=       navigator.vendor
+    let brand="",brandVersion="";
+    // no comp firefox,safari,firefox androdi,safari ios,webview android
+    try {
+        brand=        navigator.userAgentData.brands[0].brand;
+        brandVersion= navigator.userAgentData.brands[0].version;
+} catch (err) {
+  console.log("browser not Compatible 100%")
+}
+   
+    
+    let domArea=document.getElementById('browserDtext');
+    let domA=document.getElementById('browserTextArea');
+    let tempF="";
+    let dataTot=[nav,languageSet,vendor,brand,brandVersion];
+    let dataInfo=["User Agent:","Language:","Vendor:","Browser:","Version:"]
+    dataTot.forEach((currentElement,index) => {
+        if (currentElement==null){ 
+            
+        }else{
+         /* 
+         let p=document.createElement('p');
+         p.innerText=dataInfo[index]+" "+dataTot[index];
+         domArea.appendChild(p);
+         ... */ 
 
+         tempF+=dataInfo[index]+" "+dataTot[index]+"\n";
+        }})
+        domA.innerHTML=tempF;
+/*  browserTextArea
+    domArea.innerHTML="<p> User Agent:"+nav+"</p> <p>Language:"+languageSet +" </p>";
+    domArea.innerHTML+="<p> Vendor:"+vendor+"</p>";
+    domArea.innerHTML+="<p><b> Browser</b>:"+brand+"</p>";
+    domArea.innerHTML+="<p> Version:"+brandVersion+"</p><br>";
+    */
+}
+
+
+// Funzione per ottenere il nome e la versione del browser
+function getBrowserInfo() {
+  var ua = navigator.userAgent;
+  var tem;
+    var M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+    if (/trident/i.test(M[1])) {
+        tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
+        return { name: 'IE', version: (tem[1] || '') };
+    }
+    if (M[1] === 'Chrome') {
+        tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
+        if (tem != null) return { name: tem[1].replace('OPR', 'Opera'), version: tem[2] };
+    }
+    M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
+    tem = ua.match(/version\/(\d+)/i);
+    if (tem != null) M.splice(1, 1, tem[1]);
+    return {
+        name: M[0],
+        version: M[1]
+    };
+}
+
+// Ottieni le informazioni sul browser
+var browser = getBrowserInfo();
+
+// Mostra le informazioni del browser nella console
+document.getElementById('browserTextArea').innerText="Browser:"+browser.name+"\n "+"Versione:"+browser.version;
+
+
+
+
+
+/*
 function DETECTBROWSER() {
 	var HREFF,
 		HREFTXT = "unknown";
@@ -140,7 +214,7 @@ function DETECTBROWSER() {
 	* @property NAME
 	* @type {String}
 	* @default "unknown"
-	*/
+	
 	this.NAME = HREFTXT;
 	/**
 	* NOMOBILE = 1 Means desktop platform (Any win , mac or linux etc..)
@@ -148,7 +222,7 @@ function DETECTBROWSER() {
 	* @property NOMOBILE
 	* @type Number
 	* @default "unknown"
-	*/
+	
 	this.NOMOBILE = NOMOBILE;
 }
 
@@ -180,5 +254,6 @@ window.addEventListener("click",  function(event) {
 } , false); 
 
 }
+*/
 
 </script>

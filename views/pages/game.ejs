@@ -26,8 +26,9 @@
                         
                         <img src="https://latitanti.altervista.org/logoBG.png" class="fa-solid fa-play"></img>
 						<h1>ButtonGame v.0.3</h1>
-						<p>#nodejs #socket.io &nbsp;&bull;&nbsp;#ejs #express &nbsp;&bull;&nbsp; #Render Web Service</p>
                         <h2 class="popupDesk">In questo puzzle dovrete accoppiare i numeri uguali.</h2>
+                        
+						<p>#nodejs #socket.io &nbsp;&bull;&nbsp;#ejs #express &nbsp;&bull;&nbsp; #Render Web Service</p>
                         <ul class="popupDesk">  
                             <li> bottoni con i numeri uguali avranno anche lo stesso colore </li>
                             <li> Cerca di distruggere tutti i bottoni per ricevere il max punteggio </li>
@@ -144,8 +145,6 @@
          </div>
     </div> 
 
-
-
                 </div>
                     <!-- FINE Modal content -->
             </div> 
@@ -159,212 +158,13 @@
 			</div>
 		</div>
 		<script>
-
-
-let browserCheck= ()=> {
-    // compatibility 100% info browser
-	let nav =         navigator.userAgent;
-    let languageSet=  navigator.language;
-    let vendor=       navigator.vendor
-    let brand="",brandVersion="";
-    // no comp firefox,safari,firefox androdi,safari ios,webview android
-    try {
-        brand=        navigator.userAgentData.brands[0].brand;
-        brandVersion= navigator.userAgentData.brands[0].version;
-} catch (err) {
-  console.log("browser not Compatible 100%")
-}
-   
-    
-    let domArea=document.getElementById('browserDtext');
-    let domA=document.getElementById('browserTextArea');
-    let tempF="";
-    let dataTot=[nav,languageSet,vendor,brand,brandVersion];
-    let dataInfo=["User Agent:","Language:","Vendor:","Browser:","Version:"]
-    dataTot.forEach((currentElement,index) => {
-        if (currentElement==null){ 
-            
-        }else{
-         /* 
-         let p=document.createElement('p');
-         p.innerText=dataInfo[index]+" "+dataTot[index];
-         domArea.appendChild(p);
-         ... */ 
-
-         tempF+=dataInfo[index]+" "+dataTot[index]+"\n";
-        }})
-        domA.innerHTML=tempF;
-/*  browserTextArea
-    domArea.innerHTML="<p> User Agent:"+nav+"</p> <p>Language:"+languageSet +" </p>";
-    domArea.innerHTML+="<p> Vendor:"+vendor+"</p>";
-    domArea.innerHTML+="<p><b> Browser</b>:"+brand+"</p>";
-    domArea.innerHTML+="<p> Version:"+brandVersion+"</p><br>";
-    */
-}
-
-
-// Funzione per ottenere il nome e la versione del browser
-function getBrowserInfo() {
-  var ua = navigator.userAgent;
-  var tem;
-    var M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
-    if (/trident/i.test(M[1])) {
-        tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
-        return { name: 'IE', version: (tem[1] || '') };
-    }
-    if (M[1] === 'Chrome') {
-        tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
-        if (tem != null) return { name: tem[1].replace('OPR', 'Opera'), version: tem[2] };
-    }
-    M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
-    tem = ua.match(/version\/(\d+)/i);
-    if (tem != null) M.splice(1, 1, tem[1]);
-    return {
-        name: M[0],
-        version: M[1]
-    };
-}
-
-// Ottieni le informazioni sul browser
-var browser = getBrowserInfo();
-
-// Mostra le informazioni del browser nella console
-document.getElementById('browserTextArea').innerText="Browser:"+browser.name+"\n "+"Versione:"+browser.version;
-
-
-
 			window.onload = function() { document.body.classList.remove('is-preload'); }
 			window.ontouchmove = function() { return false; }
 			window.onorientationchange = function() { document.body.scrollTop = 0; }
 		
-
-            //openPage('conf')
-let openPage = async (page)=> {//debugger
-
-    modal.style.display = "block";
-
-    if (page==='conf'){
-       let page= document.getElementById('modal-conf-page')
-       //se la pagine contiene la classe hide la leva...altrimenti nn fa nulla...loool;
-       if(page.classList.contains("hide")){
-              page.classList.toggle("hide");
-        } else{ };
-
-        let testoHeader= document.getElementById('labelPage');
-        testoHeader.innerText='CONFIGURAZIONI';
-       // console.log('sto configurando...')
-
-        let logoHeader= document.getElementById('labelLogo');
-        logoHeader.className='fa-solid fa-gear';
-
-    }
-
-
-    if (page==='chat'){
-       let page= document.getElementById('modal-body')
-       //se la pagine contiene la classe hide la leva...altrimenti nn fa nulla...loool;
-       if(page.classList.contains("hide")){
-              page.classList.toggle("hide");
-        } else{ };
-
-        let testoHeader= document.getElementById('labelPage');
-        testoHeader.innerText='CHAT';
-
-        let logoHeader= document.getElementById('labelLogo');
-        logoHeader.className='fa-solid fa-comment';
-        window.scrollTo(0, document.body.scrollHeight);
-        document.querySelector("#myModal > div").scrollTo(0,800)
-
-    }
-
-
-    if (page==='stats'){
-       let page= document.getElementById('modal-conf-stat')
-       //se la pagine contiene la classe hide la leva...altrimenti nn fa nulla...loool;
-       if(page.classList.contains("hide")){
-              page.classList.toggle("hide");
-        } else{ };
-
-        let testoHeader= document.getElementById('labelPage');
-        testoHeader.innerText='CLassifica';
-       // console.log('sto configurando...')
-
-        let logoHeader= document.getElementById('labelLogo');
-        logoHeader.className='fa-solid fa-star';
-
-    }
-
-
-    if (page==='play'){
-       let page= document.getElementById('modal-conf-game')
-       //se la pagine contiene la classe hide la leva...altrimenti nn fa nulla...loool;
-       if(page.classList.contains("hide")){
-              page.classList.toggle("hide");
-        } else{ };
-
-        let testoHeader= document.getElementById('labelPage');
-        testoHeader.innerText='Play The Game';
-       // console.log('sto configurando...')
-
-        let logoHeader= document.getElementById('labelLogo');
-        logoHeader.className='fa-solid fa-play';
-
-    }
-}
-
-
-// Get the modal
-var modal = document.getElementById("myModal");
-
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-let btnConf = document.getElementById("myBtnConf");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-  closeModal();
-}
-
-//chiude tutte le modal
-const closeModal =()=>{
-    let pagecon =document.getElementById('modal-conf-page')        // PAGINA CONFIGURAZIONE
-  let pagecha= document.getElementById('modal-body')  // PAGINA CHAT
-  let pageclas= document.getElementById('modal-conf-stat')  // PAGINA STAT CLASSSSIFICA
-  let pageGame= document.getElementById('modal-conf-game');
-  
-             //se la pagine contiene la classe hide la leva...altrimenti nn fa nulla...loool;
-       if(pagecon.classList.contains("hide")){ } else{ pagecon.classList.toggle("hide");  };
-       
-       if(pagecha.classList.contains("hide")){ } else{ pagecha.classList.toggle("hide");  };
-
-       if(pageclas.classList.contains("hide")){ } else{ pageclas.classList.toggle("hide");  };
-
-       if(pageGame.classList.contains("hide")){ } else{ pageGame.classList.toggle("hide");  };
-}
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-   // console.log(event.target);
-  if (event.target == modal) {
-    modal.style.display = "none";
-    closeModal();
-  }
-}
-//SAFARI BUG DONT CLOSE IF YOU CLICK OUT OF MODAL AREA
-/*
-window.addEventListener("touchstart",  function(event) {
-  
-  if (event.target === modal) {
-    modal.style.display = "none";
-  }
-  
-})
-*/
         </script>
           <%- include('./scriptClient'); %>
+          <%- include('../../utility/scriptClientModal'); %>
+          <%- include('../../utility/browserCheck'); %>
 	</body>
 </html>
