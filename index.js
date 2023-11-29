@@ -105,6 +105,10 @@ io.on('connection', async (socket) => {
 
   socket.on('gameOnline 1vs1', async (liv,num) => {
     
+    if(numberPlayer[0]===socket.data.username){  
+      io.emit('gameSet',"Non puoi giocare contro te stesso..è buttonGame... nn una sega."); 
+      return
+      }//PLAYER GIà ISCRITTO FORSE CLIKKI DUE VOLTE X ERRORE
     //socket.data.username;
     numberPlayer.push(socket.data.username);
     console.log(numberPlayer);
