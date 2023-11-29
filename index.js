@@ -46,6 +46,7 @@ server.listen(8000);
 const ChatMsg = require('./db/chat-model')
 
 let numberPlayer=[];
+let numberPlayerChan=[];
 
 io.on('connection', async (socket) => {
     //console.log(socket.handshake.query);
@@ -94,28 +95,48 @@ io.on('connection', async (socket) => {
     let qnt=num//20;
 
     let numberData=[];
-
+    
+    //CREA UN CANALE PER L'UTENTE..COSì DA POTERGLI INVIARE DATI SOLO A LUI
+    socket.join(socket.id);//crea un canale con il nome identificativo dell'utente
+  
+//RIEMPI ARRAY CON CICLO CON I NUMERI CASUALI 
   for (let i = 0; i < qnt; i++) {
     numberData.push(Math.floor(Math.random() * numeri));
   }
-    io.emit('gameSet', numberData);
+    //INVIA DATI AL CANALE APPENA APERTO X UTENTE
+    io.to(socket.id).emit("gameSet", numberData);
+    //io.emit('gameSet', numberData);
 
   })
 
 
   socket.on('gameOnline 1vs1', async (liv,num) => {
     
-    if(numberPlayer[0]===socket.data.username){  
-      io.emit('gameSet',"Non puoi giocare contro te stesso..è buttonGame... nn una sega."); 
+//CREAZIONE CANALE PER IL  1 vs 1
+//socket.join(s); 
+    //socket.join(socket.id);
+
+    if(numberPlayer[0]===socket.data.username){  //CONTROLLA IL PRIMO UTENTE SE è LO STESSO DEL SECONDO
+       io.to(socket.id).emit('gameSet',"Non puoi giocare contro te stesso..è buttonGame... nn una sega."); 
       return
       }//PLAYER GIà ISCRITTO FORSE CLIKKI DUE VOLTE X ERRORE
     //socket.data.username;
     numberPlayer.push(socket.data.username);
     console.log(numberPlayer);
     if(numberPlayer.length >= 2){// SE CI SONO DUE PLAYER NELL'ARRAY DI ATTESA
-      io.emit('gameSet',"trovati i player x la partita.. ["+numberPlayer+"]");
+      //FAI ENTRARE UTENTE SECONDO NEL CANALE DEL 1vs1
+      socket.join(numberPlayer[0]);
+      //manda msg a quelli del canale
+      io.to(numberPlayer[0]).emit('gameSet',"trovati i player x la partita.. ["+numberPlayer+"]");
       numberPlayer=[];
-    }else{ io.emit('gameSet', "sei in attesa x la partita...\n"+socket.data.username); }
+    }else{ //SE è IL PRIMO PLAYER IN ASCOLTO PER LA PARTITA
+     
+      io.to(socket.id).emit('gameSet', "sei in attesa x la partita...\n"+socket.data.username); 
+    //APRI UN CANALE PER IL 1vs1
+    socket.join(socket.data.username);
+
+     // io.emit('gameSet', "sei in attesa x la partita...\n"+socket.data.username); 
+    }
 
  
 
