@@ -135,13 +135,15 @@
         <div onclick="playStart(1,20)" class="contact">
             <img class="pic imgPlaygame" src="https://latitanti.altervista.org/BG/img/png.png" ></img>
             <h2>CAMPAIGN </h2>
-        </div>
+         </div>
 
         <div onclick="playStart1vs1()" class="contact">
             <img class="pic imgPlaygame" src="https://latitanti.altervista.org/BG/img/png2.png" ></img>
             <h2>1 VS 1</h2>
+            <i id='waitingplayer' class="fa-solid fa-hourglass-start hide"></i>
+        
         </div>
-
+        <br>
          </div>
     </div> 
 
@@ -166,12 +168,15 @@
 
         socket.on('gameSet', (data)=> {
             console.log(data);
+            document.getElementById('waitingplayer').innerText=data;
+            
         })
 
 
         let playStart1vs1 = (liv)=>{
             console.log("invio richiesta al server [ 1 versus 1 ] ")
             socket.emit('gameOnline 1vs1','join' );// liv=1,num=20
+            document.getElementById('waitingplayer').innerText=' Invio richiesta al server...';
             }
 
 
