@@ -156,7 +156,9 @@
      <!--          PAGINA PLAYGROUND     .gaming-area -->
      <div id='modal-playGround' class="modal-body hide">
         <h2>Giochi Area</h2>
-        <br>
+        <div id="buttonAreaH">
+       
+       </div>
     </div> 
 
                 </div>
@@ -186,6 +188,21 @@
             if(typeGame==="campain"){  
 
                 openPage('playGround');
+                let page= document.getElementById('buttonAreaH');
+
+            for (let i = 0; i < data.length; i++) {
+                //creazione button
+                var item = document.createElement('button');
+                //aggiungi classe al botton
+                item.className='buttonGame effettoCiakka';
+                 //creazione elemento spam ove contenitore numero
+                 var itemDue = document.createElement('spam');
+                 //prendi il numero da data
+                 itemDue.innerText=data[i]
+                 item.appendChild(itemDue);
+                 page.appendChild(item);
+            }
+
             }else{
 
                 // if(typeGame==="1vs1"
