@@ -5,232 +5,230 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
-	<head>
-		<title>ButtonGame v.0.3 - #js #mongodb #nodejs #socket.io #ejs #express - template Aerial by HTML5 UP</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-        icoLogo.png
-        <link crossorigin="anonymous" rel="icon" href="https://latitanti.altervista.org/BG/icoLogo.png" sizes="32x32">
-        <%- include('./assets/main-css'); %>
-        <script src="https://kit.fontawesome.com/e4ff14a47e.js" crossorigin="anonymous"></script>
-		
-	</head>
-	<body class="is-preload">
-		<div id="wrapper">
-			<div id="bg"></div>
-			<div id="overlay"></div>
-			<div id="main">
 
-				<!-- Header -->
-					<header id="header">
-                        
-                        <img src="https://latitanti.altervista.org/logoBG.png" class="fa-solid fa-play"></img>
-						<h1>ButtonGame v.0.3</h1>
-                        <h2 class="popupDesk">In questo puzzle dovrete accoppiare i numeri uguali.</h2>
-                        
-						<p>#nodejs #socket.io &nbsp;&bull;&nbsp;#ejs #express &nbsp;&bull;&nbsp; #Render Web Service</p>
-                        <ul class="popupDesk">  
-                            <li> bottoni con i numeri uguali avranno anche lo stesso colore </li>
-                            <li> Cerca di distruggere tutti i bottoni per ricevere il max punteggio </li>
-                        </ul>
-						<nav>
-							<ul>
-							<!--	<li><a href="#" class="fa-solid fa-house"><span class="label">Home</span></a></li>-->
-								<li><a href="#" onclick="openPage('play');" class="fa-solid fa-play"><span class="label">PlayGame</span></a></li>
-								<li><a href="#" onclick="openPage('stats');"  class="fa-solid fa-star"><span class="label">Stats</span></a></li>
-                                <li><a href="#" onclick="openPage('chat');"  id="myBtn" class="fa-solid fa-comment"><span class="label">Chat</span></a></li>
-                                
-								<li><a href="#" onclick="openPage('conf');" id="myBtnConf" class="fa-solid fa-gear"><span class="label">Conf</span></a></li>
-                               </ul>
-						</nav>
-					</header>
-                    
-                    <section>
-                     <!-- The Modal -->
-            <div id="myModal" class="modal">
-                     <!-- START Modal content -->
-                        <!-- Modal content -->
+<head>
+    <title>ButtonGame v.0.3 - #js #mongodb #nodejs #socket.io #ejs #express - template Aerial by HTML5 UP</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    icoLogo.png
+    <link crossorigin="anonymous" rel="icon" href="https://latitanti.altervista.org/BG/icoLogo.png" sizes="32x32">
+    <%- include('./assets/main-css'); %>
+    <script src="https://kit.fontawesome.com/e4ff14a47e.js" crossorigin="anonymous"></script>
 
-                        <!--header del modal ..MOdifico ogni volta quando apro un modal-->
-                <div id="modal-document" class="modal-content">
-                            <div class="modal-header starr">
-                                <span class="close">&times;</span>
-                                <span id='labelLogo' class="fa-solid fa-comment"></span>
-                                <span id="labelPage" class="label"> CHAT </span>
-                            </div>
+</head>
 
-                 <!--        PAGINA CHAT           -->
-                    <div id='modal-body' class="modal-body hide">
+<body class="is-preload">
+    <div id="wrapper">
+        <div id="bg"></div>
+        <div id="overlay"></div>
+        <div id="main">
+
+            <!-- Header -->
+            <header id="header">
+
+                <img src="https://latitanti.altervista.org/logoBG.png" class="fa-solid fa-play"/>
+                <h1>ButtonGame v.0.3</h1>
+                <h2 class="popupDesk">In questo puzzle dovrete accoppiare i numeri uguali.</h2>
+
+                <p>#nodejs #socket.io &nbsp;&bull;&nbsp;#ejs #express &nbsp;&bull;&nbsp; #Render Web Service</p>
+                <ul class="popupDesk">
+                    <li> bottoni con i numeri uguali avranno anche lo stesso colore </li>
+                    <li> Cerca di distruggere tutti i bottoni per ricevere il max punteggio </li>
+                </ul>
+                <nav>
+                    <ul>
+                        <!--	<li><a href="#" class="fa-solid fa-house"><span class="label">Home</span></a></li>-->
+                        <li><a href="#" onclick="openPage('play');" class="fa-solid fa-play"><span class="label">PlayGame</span></a></li>
+                        <li><a href="#" onclick="openPage('stats');" class="fa-solid fa-star"><span class="label">Stats</span></a></li>
+                        <li><a href="#" onclick="openPage('chat');" id="myBtn" class="fa-solid fa-comment"><span class="label">Chat</span></a></li>
+                        <li><a href="#" onclick="openPage('conf');" id="myBtnConf" class="fa-solid fa-gear"><span class="label">Conf</span></a></li>
+                    </ul>
+                </nav>
+            </header>
+
+            <section>
+                <!-- The Modal -->
+                <div id="myModal" class="modal">
+                    <!-- START Modal content -->
+                    <!-- Modal content -->
+
+                    <!--header del modal ..MOdifico ogni volta quando apro un modal-->
+                    <div id="modal-document" class="modal-content">
+                        <div class="modal-header starr">
+                            <span class="close">&times;</span>
+                            <span id='labelLogo' class="fa-solid fa-comment"></span>
+                            <span id="labelPage" class="label"> CHAT </span>
+                        </div>
+
+                        <!--        PAGINA CHAT           -->
+                        <div id='modal-body' class="modal-body hide">
                             <ul id="messages"></ul>
                             <br><br>
-                     <div id='modal-footer' class="modal-footer">
-                        <form id="form" action="">
-                        <input id="input" autocomplete="off" /><button>Send</button>
-                        </form>
-                     </div>
+                            <div id='modal-footer' class="modal-footer">
+                                <form id="form" action="">
+                                    <input id="input" autocomplete="off" /><button>Send</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!--        PAGINA CONFIGURAZIONE           -->
+                        <div id='modal-conf-page' class="modal-body hide">
+                            <h2>COnfigurazioni</h2>
+                            <br>
+                            <div class="col-6 col-12-small">
+                                <input type="checkbox" id="demo-button" name="demo-button" checked>
+                                <label for="demo-button">bottone effettoCiakka</label>
+
+                                <input type="checkbox" id="demo-human2" name="demo-human2" checked>
+                                <label for="demo-human2">AUDIO VOLUME</label>
+                            </div>
+
+
+                            <div class="col-6 col-12-xsmall">
+                                <div class="contact">
+                                    <div class="pic rogers"></div>
+                                    <div class="badge"></div>
+                                    <input type="text" name="demo-name" id="demo-name" value="" placeholder="Name" />
+                                    <button>SAVE</button>
+                                </div>
+                                <br>
+                            </div>
+
+                            <div class="col-6 col-12-xsmall">
+                                <div class="">
+                                    <h2>Browser detect</h2>
+                                    <button onclick="browserCheck()">Check</button>
+                                    <textarea id="browserTextArea" name="demo-message" id="demo-message"
+                                        placeholder="Enter your message" rows="3"></textarea>
+                                </div>
+                                <br>
+                            </div>
+
+                            <div class="col-6 col-12-small">
+
+                            </div>
+
+                            <div class="col-12">
+                                <select name="demo-category" id="demo-category">
+                                    <option value="">- Category -</option>
+                                    <option value="1">Manufacturing</option>
+                                    <option value="1">Shipping</option>
+                                    <option value="1">Administration</option>
+                                    <option value="1">Human Resources</option>
+                                </select>
+                            </div>
+                            <br>
+                        </div>
+
+
+                        <!--          PAGINA STATS           -->
+                        <div id='modal-conf-stat' class="modal-body hide">
+                            <h2>Classifica</h2>
+                            <br>
+                        </div>
+
+
+                        <!--          PAGINA play         -->
+                        <div id='modal-conf-game' class="modal-body hide">
+                            <h2>Play The Game</h2>
+                            <br>
+                            <div class="modal-body">
+
+                                <div onclick="playStart(1,20)" class="contact">
+                                    <img class="pic imgPlaygame"
+                                        src="https://latitanti.altervista.org/BG/img/png.png"/>
+                                    <h2>CAMPAIGN </h2>
+                                </div>
+
+                                <div onclick="playStart1vs1()" class="contact">
+                                    <img class="pic imgPlaygame"
+                                        src="https://latitanti.altervista.org/BG/img/png2.png"/>
+                                    <h2>1 VS 1</h2>
+                                    <div id='waitingplayer' class="hide">
+                                        <i class="fa-solid fa-hourglass-start ">
+                                            <p id='waitingplayerText'> </p>
+                                        </i>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+
+
+                        <!--          PAGINA PLAYGROUND     .gaming-area -->
+                        <div id='modal-playGround' class="modal-body hide">
+                            <h2>Giochi Area</h2>
+                            <div id="buttonAreaH">
+
+                            </div>
+                        </div>
+
                     </div>
-
-                    <!--        PAGINA CONFIGURAZIONE           -->
-                    <div id='modal-conf-page' class="modal-body hide">
-                        <h2>COnfigurazioni</h2>
-                        <br>
-                        <div class="col-6 col-12-small">
-                            <input type="checkbox" id="demo-button" name="demo-button" checked>
-                            <label for="demo-button">bottone effettoCiakka</label>
-
-                            <input type="checkbox" id="demo-human2" name="demo-human2" checked>
-                            <label for="demo-human2">AUDIO VOLUME</label>
-                        </div>
-                     
-
-                        <div class="col-6 col-12-xsmall">
-                            <div class="contact">
-                                <div class="pic rogers"></div>
-                                <div class="badge"></div>
-                                <input type="text" name="demo-name" id="demo-name" value="" placeholder="Name" />
-                                <button>SAVE</button>
-                            </div>
-                        <br>
-                        </div>
-
-                        <div class="col-6 col-12-xsmall">
-                            <div class="">
-                                <h2>Browser detect</h2>
-                                <button onclick="browserCheck()">Check</button>
-                                <textarea id="browserTextArea" name="demo-message" id="demo-message" placeholder="Enter your message" rows="3"></textarea>
-                          		
-                               	
-                            </div>
-                        <br>
-                        </div>
-
-                        <div class="col-6 col-12-small">
-                           	
-                        </div>
-
-                        <div class="col-12">
-                            <select name="demo-category" id="demo-category">
-                                <option value="">- Category -</option>
-                                <option value="1">Manufacturing</option>
-                                <option value="1">Shipping</option>
-                                <option value="1">Administration</option>
-                                <option value="1">Human Resources</option>
-                            </select>
-                        </div>
-                        <br>
-                    </div> 
-
-
-    <!--          PAGINA STATS           -->
-                    <div id='modal-conf-stat' class="modal-body hide">
-                        <h2>Classifica</h2>
-                        <br>
-                    </div> 
-
-
-    <!--          PAGINA play         -->
-    <div id='modal-conf-game' class="modal-body hide">
-        <h2>Play The Game</h2>
-        <br>
-        <div class="modal-body">
-                
-        <div onclick="playStart(1,20)" class="contact">
-            <img class="pic imgPlaygame" src="https://latitanti.altervista.org/BG/img/png.png" ></img>
-            <h2>CAMPAIGN </h2>
-         </div>
-
-        <div onclick="playStart1vs1()" class="contact">
-            <img class="pic imgPlaygame" src="https://latitanti.altervista.org/BG/img/png2.png" ></img>
-            <h2>1 VS 1</h2>
-            <div id='waitingplayer' class="hide">
-            <i class="fa-solid fa-hourglass-start ">
-                <p id='waitingplayerText'> </p>
-            </i>
-            </div>
-        </div>
-        <br>
-         </div>
-    </div> 
-
-
-     <!--          PAGINA PLAYGROUND     .gaming-area -->
-     <div id='modal-playGround' class="modal-body hide">
-        <h2>Giochi Area</h2>
-        <div id="buttonAreaH">
-       
-       </div>
-    </div> 
-
-                </div>
                     <!-- FINE Modal content -->
-            </div> 
-                    </section>
-				<!-- Footer -->
-					<footer id="footer">
-                      
-						<span class="copyright">&copy;ButtoneGame</span>
-					</footer>
+                </div>
+            </section>
+            <!-- Footer -->
+            <footer id="footer">
 
-			</div>
-		</div>
-        <%- include('./scriptClient'); %>
+                <span class="copyright">&copy;ButtoneGame</span>
+            </footer>
+
+        </div>
+    </div>
+    <%- include('./scriptClient'); %>
         <%- include('../../utility/scriptClientModal'); %>
-		<script>
-			
-            let playStart = (liv,num)=>{
-            socket.emit('game start',liv,num );// liv=1,num=20
-            }
+            <script>
+
+                let playStart = (liv, num) => {
+                    socket.emit('game start', liv, num);// liv=1,num=20
+                }
 
 
-        socket.on('gameSet', (data,typeGame)=> {
-            console.log(data);
+                socket.on('gameSet', (data, typeGame) => {
+                    console.log(data);
 
-            if(typeGame==="campain"){  
+                    if (typeGame === "campain") {
 
-                openPage('playGround');
-                let page= document.getElementById('buttonAreaH');
+                        openPage('playGround');
+                        let page = document.getElementById('buttonAreaH');
 
-            for (let i = 0; i < data.length; i++) {
-                //creazione button
-                var item = document.createElement('button');
-                //aggiungi classe al botton
-                item.className='buttonGame effettoCiakka';
-                 //creazione elemento spam ove contenitore numero
-                 var itemDue = document.createElement('spam');
-                 //prendi il numero da data
-                 itemDue.innerText=data[i]
-                 item.appendChild(itemDue);
-                 page.appendChild(item);
-            }
+                        for (let i = 0; i < data.length; i++) {
+                            //creazione button
+                            var item = document.createElement('button');
+                            //aggiungi classe al botton
+                            item.className = 'buttonGame effettoCiakka';
+                            //creazione elemento spam ove contenitore numero
+                            var itemDue = document.createElement('spam');
+                            //prendi il numero da data
+                            itemDue.innerText = data[i]
+                            item.appendChild(itemDue);
+                            page.appendChild(item);
+                        }
 
-            }else{
+                    } else {
 
-                // if(typeGame==="1vs1"
-            //messaggio x testare anzi x avvisare i giocatori x il 1vs1
-            let page= document.getElementById('waitingplayer')
-       //se la pagine contiene la classe hide la leva...altrimenti nn fa nulla...loool;
-       if(page.classList.contains("hide")){
-              page.classList.toggle("hide");
-        } else{ };
-            document.getElementById('waitingplayerText').innerText=data;
-        }
+                        // if(typeGame==="1vs1"
+                        //messaggio x testare anzi x avvisare i giocatori x il 1vs1
+                        let page = document.getElementById('waitingplayer')
+                        //se la pagine contiene la classe hide la leva...altrimenti nn fa nulla...loool;
+                        if (page.classList.contains("hide")) {
+                            page.classList.toggle("hide");
+                        } else { };
+                        document.getElementById('waitingplayerText').innerText = data;
+                    }
 
-    ///QUI CREO LA LOGICA DEL GIOCO SINGOLO CAMPAIGN UNA VOLTA RICEVUTO ARRAY CON I NUMERI
-       
-            
-        
-        })
+                    ///QUI CREO LA LOGICA DEL GIOCO SINGOLO CAMPAIGN UNA VOLTA RICEVUTO ARRAY CON I NUMERI
 
+                })
 
-        let playStart1vs1 = (liv)=>{
-            console.log("invio richiesta al server [ 1 versus 1 ] ")
-            socket.emit('gameOnline 1vs1','join' );// liv=1,num=20
-            document.getElementById('waitingplayerText').innerText=' Invio richiesta al server...';
-            }
+                let playStart1vs1 = (liv) => {
+                    console.log("invio richiesta al server [ 1 versus 1 ] ")
+                    socket.emit('gameOnline 1vs1', 'join');// liv=1,num=20
+                    document.getElementById('waitingplayerText').innerText = ' Invio richiesta al server...';
+                }
 
-        </script>
+            </script>
+            <%- include('../../utility/browserCheck'); %>
+</body>
 
-         
-          <%- include('../../utility/browserCheck'); %>
-	</body>
 </html>
