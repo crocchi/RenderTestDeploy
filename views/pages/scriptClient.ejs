@@ -13,9 +13,10 @@
         login: localStorage.getItem("nickName")
       }
     });
-  } else socket = io();
+  } else socket = io("http://fra-srv.mywire.org:51420");
 
-  let getTime = () => {
+  // serve?
+  const getTime = () => {
     const now = new Date();
     return `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`
   }
@@ -27,44 +28,34 @@
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (input.value) {
-      let timeNow = getTime();
-      socket.emit('chat message', input.value, timeNow);
+      socket.emit('chat message', input.value);
       input.value = '';
     }
   });
 
+  const renderChatRecord = msgObj => {
+    const messageEl = document.createElement('li');
+    messageEl.className = 'message parker';
+    messageEl.innerHTML = `<chat>${msgObj.userName}</chat> ${msgObj.content} <time>${msgObj.createdAt}</time>`
+    return messageEl
+  }
+
+  const renderMessageObject = msgObj => {
+    const messageEl = document.createElement('li');
+    messageEl.className = 'message parker';
+    renderedString = !msgObj.isSystemMessage 
+      ?  `<chat>${msgObj.username}</chat> ${msgObj.msg} <time>${msgObj.timestamp}</time>`   
+      : `<p style="font-style: italic">${msgObj.msg}</p>`
+    messageEl.innerHTML = renderedString
+    console.log('renderMessageObj out', messageEl.innerHTML)
+    return messageEl
+  }
   //RICEVE CHAT MESSAGE 
-  socket.on('chat message', function (msg, acc, exit, timee) {
-
-    var item = document.createElement('div');
-    item.className = 'message parker';
-
-    if (exit) {
-      item.textContent = acc + ' ' + msg + '';
-      messages.appendChild(item);
-      return
-    }
-    //   <time></time>
-    //item.textContent = acc+':'+msg;
-    item.innerHTML = "<chat>" + acc + '</chat>:' + msg + '<time>' + timee + '</time>';
-    messages.appendChild(item);
-
-    /*   
-   //provo a incollare lorario del msg ad elemento html con getboundclient
-   let msgTime = document.createElement('time');
-     // per assegnare degli stili sarebbe preferibile usare una classe CSS
-     //msgTime.style.cssText = "position:absolute; color: red";
-     msgTime.innerText=timee;
-     let coords = item.getBoundingClientRect();
-     msgTime.style.left = (coords.right-45) + "px";
-     msgTime.style.top = (coords.top-4) + "px";
-     //msgTime.style.right = coords.right + "px";
-   
-     messages.appendChild(msgTime);
-   */
-    //window.scrollTo(0, document.body.scrollHeight);
+  socket.on('chat message', (fetchedMsg) => {
+    console.log('fetchedMsg() in', fetchedMsg)
+    const renderedMessage = renderMessageObject(fetchedMsg) 
+    messages.appendChild(renderedMessage);
     document.querySelector("#myModal > div").scrollTo(0, 799)
-    //window.scrollTo(top);
   });
 
 
@@ -72,16 +63,15 @@
     console.log('ti è stato dato il nickName...' + userNick);
     //localStorage.setItem("nickName", userNick);
   });
+
   let loading = true;
   //  CARICA LA VECCHIA CHAT
-  socket.on("chatRecord", (data) => {
+  socket.on("chatRecord", (fetchedMsgs) => {
     if (loading) {
-      for (let i = data.length - 10; i < data.length; i++) {
-        var item = document.createElement('div');
-        item.className = 'message parker';
-        //item.textContent = data[i].nick+': '+data[i].text;
-        item.innerHTML = "<chat>" + data[i].nick + '</chat>: ' + data[i].text + '<time>(' + data[i].data + ')</time>';
-        messages.appendChild(item);
+      // fetchedMsgs.map?
+      for (let i = fetchedMsgs.length - 10; i < fetchedMsgs.length; i++) {
+        const renderedChatRecords = renderChatRecord(fetchedMsgs[i])
+        messages.appendChild(renderedChatRecords);
       }
     }
     //localStorage.setItem("nickName", userNick);
