@@ -21,6 +21,12 @@
     return `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`
   }
 
+  const isSameUser = (user) => {
+    console.log("user", user)
+    console.log("socket",(socket.id).slice(1,6))
+    return user === (socket.id).slice(1,6)
+  }
+
   let form = document.getElementById('form');
   let input = document.getElementById('input');
   let messages = document.getElementById('messages');
@@ -35,21 +41,35 @@
 
   const renderChatRecord = msgObj => {
     const messageEl = document.createElement('li');
-    messageEl.className = 'message parker';
-    messageEl.innerHTML = `<chat>${msgObj.userName}</chat> ${msgObj.content} <time>${msgObj.createdAt}</time>`
+    messageEl.className = `message parker primary-dark-bg`;
+    messageEl.innerHTML = `<div><chat>${msgObj.userName}</chat> ${msgObj.content}</div> <time>${msgObj.createdAt}</time>`
     return messageEl
   }
 
   const renderMessageObject = msgObj => {
+    let cssColor = 'secondary-bg';
+    let cssFloat = '';
+    let userTag = msgObj.username;
+
+    if (isSameUser(msgObj.username)) {
+      cssColor = 'primary-bg'
+      cssFloat = 'float-right'
+      userTag = `You [ ${msgObj.username} ]`
+    } 
+    
+    if (msgObj.isSystemMessage) cssColor = 'system-bg' 
     const messageEl = document.createElement('li');
-    messageEl.className = 'message parker';
-    renderedString = !msgObj.isSystemMessage 
-      ?  `<chat>${msgObj.username}</chat> ${msgObj.msg} <time>${msgObj.timestamp}</time>`   
-      : `<p style="font-style: italic">${msgObj.msg}</p>`
+    const classCSS = `message parker ${cssFloat} ${cssColor}`
+    messageEl.className = classCSS;
+
+    const renderedString = !msgObj.isSystemMessage 
+      ?  `<div><chat>${userTag}</chat> ${msgObj.msg}</div> <time>${msgObj.timestamp}</time>`   
+      : `<div><chat>#</chat> <p style="font-style: italic">${msgObj.msg}</p> <div>`
     messageEl.innerHTML = renderedString
     console.log('renderMessageObj out', messageEl.innerHTML)
     return messageEl
   }
+
   //RICEVE CHAT MESSAGE 
   socket.on('chat message', (fetchedMsg) => {
     console.log('fetchedMsg() in', fetchedMsg)
